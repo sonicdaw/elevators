@@ -294,6 +294,16 @@ window.onload = function() {
       ctx.stroke();
 
       ctx.fillText(person_target_floor[i], person_x[i] - 8, person_y - 4 + person_offset);
+
+      // draw angry line
+      if(person_angry_gauge[i] > 255){
+        var building_value_height = FIELD_HEIGHT * building_value / BUILDING_VALUE_MAX;
+        ctx.beginPath();
+        ctx.strokeStyle = "#eaa";
+        ctx.moveTo(person_x[i],     person_y + 8 + person_offset);
+        ctx.lineTo(LEFT_OFFSET + FIELD_WIDTH + 2, TOP_OFFSET + FIELD_HEIGHT - building_value_height);
+        ctx.stroke();
+      }
      }
     }
 
