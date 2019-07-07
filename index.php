@@ -473,13 +473,14 @@ window.onload = function() {
     "music00": new Audio("./Ant_Work.mp3")
   };
   for(var i in AUDIO_LIST){
-	AUDIO_LIST[i].load();
+//	AUDIO_LIST[i].load();
   }
-  AUDIO_LIST["music00"].play();
+//  AUDIO_LIST["music00"].play();
 
   move();
 };
 </script><BR>
+0.011 remove BGM (to avoid heavy load start on SmartPhone)<BR>
 0.010 added building value gauge<BR>
 0.009 added BGM on PC ( soundorbis <a href="https://note.mu/soundorbis/n/n4470d1faf50c" target="_blank">Ant Work</a> )<BR>
 0.008 added OK / Bug Fix<BR>
