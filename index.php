@@ -23,10 +23,18 @@ window.onload = function() {
   const HEIGHT = 300;
   const LEFT_OFFSET = 10;
   const TOP_OFFSET = 10;
-  const FIELD_WIDTH = 280;
-  const FIELD_HEIGHT = 280;
-  const NUM_OF_PEOPLE = 100;
+  var FIELD_WIDTH = 280;
+  var FIELD_HEIGHT = 280;
+  const NUM_OF_PEOPLE = 1000;
   const DEFAULT_FONT = "bold 8pt 'Times New Roman'";
+
+  var game_over = false;
+
+  // million dollar
+  const BUILDING_VALUE_MAX = 10000;
+  var building_value = BUILDING_VALUE_MAX;
+  const BUILDING_VALUE_WIDTH = 20;
+  FIELD_WIDTH = FIELD_WIDTH - BUILDING_VALUE_WIDTH;
 
   var counter = 0;
   const NUM_OF_ELEVATORS = <?php echo $num_of_elevators ?>;
@@ -301,6 +309,21 @@ window.onload = function() {
     }
     ctx.font = DEFAULT_FONT;
 
+    // Draw Building Value
+    ctx.fillStyle = "#2EA2B0";
+    ctx.beginPath();
+    var building_value_height = FIELD_HEIGHT * building_value / BUILDING_VALUE_MAX;
+    ctx.fillRect(LEFT_OFFSET + FIELD_WIDTH + 2, TOP_OFFSET + FIELD_HEIGHT - building_value_height,
+             BUILDING_VALUE_WIDTH - 4, building_value_height);
+    ctx.stroke();
+
+    if(game_over == true){
+        ctx.fillStyle = "#E9967A";
+        ctx.font = 40 + "pt 'Times New Roman'";;
+        ctx.fillText("Game Over", WIDTH / 2, HEIGHT / 2);
+       return;
+    }
+
     // move elevator
     for(var i = 0; i < NUM_OF_ELEVATORS; i++){
       if(elevator_y[i] > getFloorY(elevator_target_floor[i])) {elevator_y[i]--};
@@ -329,6 +352,10 @@ window.onload = function() {
         if( person_x[i] < getElevatorCenterX(person_near_elevator_num[i]) ) person_x[i]+=0.5;
 
         person_angry_gauge[i]++;	// add angry guage
+        if(person_angry_gauge[i] > 255){
+          building_value--;
+          if(building_value < 0) game_over = true;		// GAME OVER
+        }
       }
      }
     }
@@ -359,6 +386,8 @@ window.onload = function() {
                 arrived_x[j] = person_x[i];
                 arrived_y[j] = getFloorBottomY(person_target_floor[i]) - ELEVATOR_HEIGHT / 2 + person_offset;
                 arrived_counter[j] = ARRIVED_COUNTER_MAX;
+                building_value += 100;
+                if(building_value > BUILDING_VALUE_MAX) building_value = BUILDING_VALUE_MAX;
                 break;
               }
             }
@@ -451,6 +480,7 @@ window.onload = function() {
   move();
 };
 </script><BR>
+0.010 added building value gauge<BR>
 0.009 added BGM on PC ( soundorbis <a href="https://note.mu/soundorbis/n/n4470d1faf50c" target="_blank">Ant Work</a> )<BR>
 0.008 added OK / Bug Fix<BR>
 0.007 added elevator arrow / Bug Fix<BR>
