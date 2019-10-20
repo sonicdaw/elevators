@@ -199,6 +199,35 @@ window.onload = function() {
     return Math.floor(elevator_num);
   }
 
+  // Count Max for next person in. (Small = Busy)
+  function countMaxForNextPersonIn(){
+    var count = 80;
+    switch (time_hour) {
+      case 8:
+        count = 40;
+        break;
+      case 8:
+        count = 60;
+        break;
+      case 12:
+        count = 20;
+        break;
+      case 17:
+        count = 40;
+        break;
+      case 18:
+        count = 30;
+        break;
+      case 19:
+        count = 60;
+        break;
+      case 20:
+        count = 70;
+        break;
+    }
+    return count;
+  }
+
   // DRAW
   function draw(){
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
@@ -457,7 +486,7 @@ window.onload = function() {
 
     // Time count
     time_sec++;
-    if(time_sec > 10){
+    if(time_sec > 50){
       time_minute++;
       time_sec = 0;
     }
@@ -504,7 +533,7 @@ window.onload = function() {
       }
     }
     counter++;
-    if(counter > 80) counter = 0;
+    if(counter > countMaxForNextPersonIn()) counter = 0;
   }
 
   var move = function() {
