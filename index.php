@@ -44,12 +44,16 @@ window.onload = function() {
   const ELEVATOR_HEIGHT = FIELD_HEIGHT / NUM_OF_FLOORS;
 
   var elevator_y =  new Array(NUM_OF_ELEVATORS);
+  var elevator_vy =  new Array(NUM_OF_ELEVATORS);
+  var elevator_vvy =  new Array(NUM_OF_ELEVATORS);
   var elevator_target_floor =  new Array(NUM_OF_ELEVATORS);
   var elevator_ride_on = new Array(NUM_OF_ELEVATORS);
   for(var i = 0; i < NUM_OF_ELEVATORS; i++)
   {
     elevator_target_floor[i] = 1;  // ground floor
     elevator_y[i] = getFloorY(elevator_target_floor[i]);
+    elevator_vy[i] = 1;
+    elevator_vvy[i] = 0;
     elevator_ride_on[i] = false;
   }
 
@@ -143,6 +147,7 @@ window.onload = function() {
     elevator = getElevator(mouseX);
     if(elevator_ride_on[elevator] == false){
       elevator_target_floor[elevator] = getFloor(mouseY);
+      if(elevator_vvy[elevator]<10){ elevator_vvy[elevator] += 4;}
 
       // touch animation
       touchX = elevator;
@@ -336,8 +341,14 @@ window.onload = function() {
 
     // move elevator
     for(var i = 0; i < NUM_OF_ELEVATORS; i++){
-      if(elevator_y[i] > getFloorY(elevator_target_floor[i])) {elevator_y[i]--};
-      if(elevator_y[i] < getFloorY(elevator_target_floor[i])) {elevator_y[i]++};
+      if(elevator_y[i] > getFloorY(elevator_target_floor[i])) {elevator_y[i] -= elevator_vy[i];};
+      if(elevator_y[i] < getFloorY(elevator_target_floor[i])) {elevator_y[i] += elevator_vy[i];};
+
+      if(elevator_vvy[i] > 0) {elevator_vvy[i]--;}
+      if(elevator_vvy[i] < 0) {elevator_vvy[i] = 0;}
+      elevator_vy[i] = elevator_vy[i] + elevator_vvy[i];
+      if(elevator_vy[i] > 1)  {elevator_vy[i]--;}
+      if(elevator_vy[i] <= 0) {elevator_vy[i] = 1;}
     }
 
     // move persons
