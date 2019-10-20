@@ -28,6 +28,10 @@ window.onload = function() {
   const NUM_OF_PEOPLE = 1000;
   const DEFAULT_FONT = "bold 8pt 'Times New Roman'";
 
+  var time_hour = 8;
+  var time_minute = 0;
+  var time_sec = 0;
+
   var game_over = false;
 
   // million dollar
@@ -339,6 +343,15 @@ window.onload = function() {
        return;
     }
 
+    // Draw Time
+    ctx.fillStyle = 'rgba(0, 0, 0)';
+    ctx.font = 10 + "pt 'Times New Roman'";
+    if(time_hour < 12){
+      ctx.fillText("AM " + time_hour + ":" + time_minute, LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET);
+    }else{
+      ctx.fillText("PM " + (time_hour - 12)  + ":" + time_minute, LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET);
+    }
+
     // move elevator
     for(var i = 0; i < NUM_OF_ELEVATORS; i++){
       if(elevator_y[i] > getFloorY(elevator_target_floor[i])) {elevator_y[i] -= elevator_vy[i];};
@@ -442,7 +455,19 @@ window.onload = function() {
       }
     }
 
-
+    // Time count
+    time_sec++;
+    if(time_sec > 10){
+      time_minute++;
+      time_sec = 0;
+    }
+    if(time_minute > 59){
+      time_hour++;
+      time_minute = 0;
+    }
+    if(time_hour > 23){
+      time_hour = 0;
+    }
 
     ctx.fillStyle = "#000";
 
