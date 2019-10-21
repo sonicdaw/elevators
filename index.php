@@ -106,7 +106,7 @@ window.onload = function() {
 
   var ctx = canvas.getContext('2d');
   var interval = 10;
-  var elevator;
+//  var elevator;
 
   // ----------------------------------------------------------------
   // mouse or touch
@@ -148,7 +148,7 @@ window.onload = function() {
 
   function find_elevator_and_floor(){
     // find elevator, floor
-    elevator = getElevator(mouseX);
+    var elevator = getElevator(mouseX);
     if(elevator_ride_on[elevator] == false){
       elevator_target_floor[elevator] = getFloor(mouseY);
       if(elevator_vvy[elevator]<10){ elevator_vvy[elevator] += 4;}
