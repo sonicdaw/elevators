@@ -31,6 +31,8 @@ window.onload = function() {
   var time_hour = 8;
   var time_minute = 0;
   var time_sec = 0;
+  const time_minute_max = 60;
+  const time_sec_max = 50;
 
   var game_over = false;
 
@@ -374,12 +376,31 @@ window.onload = function() {
 
     // Draw Time
     ctx.fillStyle = 'rgba(0, 0, 0)';
-    ctx.font = 10 + "pt 'Times New Roman'";
-    if(time_hour < 12){
-      ctx.fillText("AM " + time_hour + ":" + time_minute, LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET);
+    var time_size = 1;  // 0-1
+    var time_hold = 5;
+    if(time_minute == 0){
+       time_size = 1 - (time_sec_max - time_sec) / time_sec_max;
+    }else if(time_minute < time_hold){
+       time_size = 1;
+    }else if(time_minute < 12){
+       var ten_minute_max = (12 - time_hold) * time_sec_max;
+       time_size = (ten_minute_max - (time_minute - (time_hold - 1)) * time_sec_max + (time_sec_max - time_sec)) / ten_minute_max;
     }else{
-      ctx.fillText("PM " + (time_hour - 12)  + ":" + time_minute, LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET);
+       time_size = 0;
     }
+    ctx.font = 10 + 10 * time_size + "pt 'Times New Roman'";
+    var text_minutes;
+    if(time_minute < 10){
+      text_minutes = "0" + time_minute;
+    }else{
+      text_minutes = time_minute;
+    }
+    if(time_hour < 12){
+      ctx.fillText("AM " + time_hour + ":" + text_minutes, LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 4) * time_size);
+    }else{
+      ctx.fillText("PM " + (time_hour - 12)  + ":" + text_minutes, LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 4) * time_size);
+    }
+    ctx.font = DEFAULT_FONT;
 
     // move elevator
     for(var i = 0; i < NUM_OF_ELEVATORS; i++){
@@ -486,11 +507,11 @@ window.onload = function() {
 
     // Time count
     time_sec++;
-    if(time_sec > 50){
+    if(time_sec > time_sec_max - 1){
       time_minute++;
       time_sec = 0;
     }
-    if(time_minute > 59){
+    if(time_minute > time_minute_max - 1){
       time_hour++;
       time_minute = 0;
     }
