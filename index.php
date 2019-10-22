@@ -28,7 +28,7 @@ window.onload = function() {
   const NUM_OF_PEOPLE = 1000;
   const DEFAULT_FONT = "bold 8pt 'Times New Roman'";
 
-  var time_hour = 8;
+  var time_hour = 6;
   var time_minute = 0;
   var time_sec = 0;
   const time_minute_max = 60;
@@ -205,10 +205,16 @@ window.onload = function() {
   function countMaxForNextPersonIn(){
     var count = 80;
     switch (time_hour) {
+      case 6:
+        count = 600;
+        break;
+      case 7:
+        count = 200;
+        break;
       case 8:
         count = 40;
         break;
-      case 8:
+      case 9:
         count = 60;
         break;
       case 12:
