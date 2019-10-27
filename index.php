@@ -103,6 +103,7 @@ window.onload = function() {
   var touchX = 0;
   var touchY = 0;
   var touchViewCounter = 0;
+  var touchHoldElevator = -1;
   var timer;
   var canvas = document.getElementById('cvs');
   if (!canvas.getContext) {
@@ -134,7 +135,7 @@ window.onload = function() {
     adjustLocation(e);
     event.preventDefault();
 
-    find_elevator_and_floor()
+    touchHoldElevator = find_elevator_and_floor()
 
     return false;
   }
@@ -148,6 +149,7 @@ window.onload = function() {
 
   canvas.ontouchend=function(e){
     adjustLocation(e);
+    touchHoldElevator = -1;
     return false;
   }
 
@@ -163,6 +165,7 @@ window.onload = function() {
       touchY = elevator_target_floor[elevator];
       touchViewCounter = 255;
     }
+    return elevator;
   }
 
   function adjustLocation(e){
@@ -432,6 +435,8 @@ window.onload = function() {
 
     // move elevator
     for(var i = 0; i < NUM_OF_ELEVATORS; i++){
+     if(touchHoldElevator != i){
+
       if(elevator_y[i] > getFloorY(elevator_target_floor[i])) {elevator_y[i] -= elevator_vy[i];};
       if(elevator_y[i] < getFloorY(elevator_target_floor[i])) {elevator_y[i] += elevator_vy[i];};
 
@@ -440,6 +445,7 @@ window.onload = function() {
       elevator_vy[i] = elevator_vy[i] + elevator_vvy[i];
       if(elevator_vy[i] > 1)  {elevator_vy[i]--;}
       if(elevator_vy[i] <= 0) {elevator_vy[i] = 1;}
+     }
     }
 
     // move persons
