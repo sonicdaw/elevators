@@ -1,8 +1,10 @@
 <?php
 $num_of_floors = intval($_GET["floor"]);
 $num_of_elevators = intval($_GET["elevator"]);
+$field_height = intval($_GET["height"]);
 if($num_of_floors == 0) $num_of_floors = 4;
 if($num_of_elevators == 0) $num_of_elevators = 4;
+if($field_height == 0) $field_height = 600;
 ?><html>
 <head>
 <title>Elevators Proto</title>
@@ -10,21 +12,22 @@ if($num_of_elevators == 0) $num_of_elevators = 4;
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 </head>
 <body><CENTER><B>Elevators Proto</B><br>Touch the target floor to catch up<br>
-<a href="http://entatonic.net/elevators/index.php">4floors/4Elevators</a> 
-<a href="http://entatonic.net/elevators/index.php?floor=7&elevator=2">7/2</a> 
-<a href="http://entatonic.net/elevators/index.php?floor=10&elevator=10">10/6</a> 
-<a href="http://entatonic.net/elevators/index.php?floor=16&elevator=10">16/10</a><br>
+<a href="http://entatonic.net/elevators/index.php">4x4</a> 
+<a href="http://entatonic.net/elevators/index.php?floor=8&elevator=4">4x8</a> 
+<a href="http://entatonic.net/elevators/index.php?floor=7&elevator=2">2x7</a> 
+<a href="http://entatonic.net/elevators/index.php?floor=10&elevator=10">6x10</a> 
+<a href="http://entatonic.net/elevators/index.php?floor=16&elevator=10">10x16</a><br>
 <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
-<canvas id="cvs" width="300" height="300"></canvas>
+<canvas id="cvs" width="300" height="<?php echo $field_height ?>"></canvas>
 <script type="text/javascript">
 window.onload = function() {
 
   const WIDTH = 300;
-  const HEIGHT = 300;
+  const HEIGHT = <?php echo $field_height ?>;
   const LEFT_OFFSET = 10;
   const TOP_OFFSET = 10;
   var FIELD_WIDTH = 280;
-  var FIELD_HEIGHT = 280;
+  var FIELD_HEIGHT = HEIGHT - TOP_OFFSET * 2;
   const NUM_OF_PEOPLE = 1000;
   const DEFAULT_FONT = "bold 8pt 'Times New Roman'";
 
@@ -234,6 +237,25 @@ window.onload = function() {
         break;
     }
     return count;
+  }
+
+  function person_fieldin_1stfloor_percentage(){
+    var percentage = 80;
+    switch (time_hour) {
+      case 6:
+        percentage = 90;
+        break;
+      case 7:
+        percentage = 90;
+        break;
+      case 8:
+        percentage = 60;
+        break;
+      case 9:
+        percentage = 50;
+        break;
+    }
+    return percentage;
   }
 
   // DRAW
@@ -546,7 +568,11 @@ window.onload = function() {
           }else{
             person_x[i] = FIELD_WIDTH;
           }
-          person_current_floor[i] = Math.floor(Math.random() * NUM_OF_FLOORS + 1);
+          if(person_fieldin_1stfloor_percentage() > Math.floor(Math.random() * 100)){
+            person_current_floor[i] = 1;
+          }else{
+            person_current_floor[i] = Math.floor(Math.random() * NUM_OF_FLOORS + 1);
+          }
           person_target_floor[i] = Math.floor(Math.random() * NUM_OF_FLOORS + 1);
           while(person_current_floor[i] == person_target_floor[i]){
             person_target_floor[i] = Math.floor(Math.random() * NUM_OF_FLOORS + 1);
