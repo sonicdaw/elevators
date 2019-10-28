@@ -435,7 +435,8 @@ window.onload = function() {
 
     // move elevator
     for(var i = 0; i < NUM_OF_ELEVATORS; i++){
-     if((touchHoldElevator != i && person_ride_on[i] == false) || person_ride_on[i] == true){
+     if(touchHoldElevator == i && elevator_ride_on[i] == false){
+     }else{
       if(elevator_y[i] > getFloorY(elevator_target_floor[i])) {elevator_y[i] -= elevator_vy[i];};
       if(elevator_y[i] < getFloorY(elevator_target_floor[i])) {elevator_y[i] += elevator_vy[i];};
 
