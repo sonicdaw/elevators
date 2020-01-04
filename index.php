@@ -11,7 +11,7 @@ if($field_height == 0) $field_height = 600;
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 </head>
-<body><CENTER><B>Elevators Proto</B><br>Touch the target floor to catch up<br>
+<body><CENTER><B>Elevators Proto</B><br>
 <a href="http://entatonic.net/elevators/index.php">4x4</a> 
 <a href="http://entatonic.net/elevators/index.php?floor=8&elevator=4">4x8</a> 
 <a href="http://entatonic.net/elevators/index.php?floor=7&elevator=2">2x7</a> 
@@ -618,15 +618,6 @@ window.onload = function() {
 
   move();
 };
-</script><BR>
-0.011 remove BGM (to avoid heavy load start on SmartPhone)<BR>
-0.010 added building value gauge<BR>
-0.009 added BGM on PC ( soundorbis <a href="https://note.mu/soundorbis/n/n4470d1faf50c" target="_blank">Ant Work</a> )<BR>
-0.008 added OK / Bug Fix<BR>
-0.007 added elevator arrow / Bug Fix<BR>
-0.006 added touch reaction<BR>
-0.005 added angry gauge as red<BR>
-0.004 floor, elevator combinations<BR>
-v0.002 added persons/0.003 bug fix
+</script>
 </CENTER></body>
 </html>
