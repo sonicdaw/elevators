@@ -11,7 +11,7 @@ if($field_height == 0) $field_height = 600;
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 </head>
-<body><CENTER><B>Elevators Proto</B><br>
+<body><CENTER>
 <a href="http://entatonic.net/elevators/index.php">4x4</a> 
 <a href="http://entatonic.net/elevators/index.php?floor=8&elevator=4">4x8</a> 
 <a href="http://entatonic.net/elevators/index.php?floor=7&elevator=2">2x7</a> 
