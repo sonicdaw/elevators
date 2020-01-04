@@ -74,6 +74,7 @@ window.onload = function() {
   var person_near_elevator_num = new Array(NUM_OF_PEOPLE);
   var person_angry_gauge = new Array(NUM_OF_PEOPLE);
   var person_offset = -11;
+  var person_size = new Array(NUM_OF_PEOPLE);
 
   for(var i = 0; i < NUM_OF_PEOPLE; i++)
   {
@@ -84,6 +85,7 @@ window.onload = function() {
     person_ride_on_elevator[i] = -1;
     person_near_elevator_num[i] = 0;
     person_angry_gauge[i] = 0;
+    person_size[i] = 1;
   }
 
   const NUM_OF_ARRIVED = 20;
@@ -347,20 +349,21 @@ window.onload = function() {
         person_y = elevator_y[person_ride_on_elevator[i]] + ELEVATOR_HEIGHT;		// ride on, get elevator y
       }
 
+      var size = person_size[i];;
       ctx.beginPath();
       ctx.strokeStyle = 'rgb(' + person_angry_gauge[i] + ', 0, 0)';
-      ctx.arc(person_x[i], person_y + person_offset, 3, 0, Math.PI*2, true);
-      ctx.moveTo(person_x[i] - 5, person_y + 6 + person_offset);
-      ctx.lineTo(person_x[i] + 5, person_y + 6 + person_offset);
+      ctx.arc(person_x[i], person_y + person_offset * size, 3 * size, 0, Math.PI*2, true);
+      ctx.moveTo(person_x[i] - 5 * size, person_y + (6 + person_offset) * size);
+      ctx.lineTo(person_x[i] + 5 * size, person_y + (6 + person_offset) * size);
 
-      ctx.moveTo(person_x[i], person_y + 3 + person_offset);
-      ctx.lineTo(person_x[i], person_y + 8 + person_offset);
+      ctx.moveTo(person_x[i], person_y + (3 + person_offset) * size);
+      ctx.lineTo(person_x[i], person_y + (8 + person_offset) * size);
 
-      ctx.moveTo(person_x[i],     person_y + 8 + person_offset);
-      ctx.lineTo(person_x[i] - 4, person_y + 11 + person_offset);
+      ctx.moveTo(person_x[i],            person_y + (8 + person_offset) * size);
+      ctx.lineTo(person_x[i] - 4 * size, person_y + (11 + person_offset) * size);
 
-      ctx.moveTo(person_x[i],     person_y + 8 + person_offset);
-      ctx.lineTo(person_x[i] + 4, person_y + 11 + person_offset);
+      ctx.moveTo(person_x[i],            person_y + (8 + person_offset) * size);
+      ctx.lineTo(person_x[i] + 4 * size, person_y + (11 + person_offset) * size);
 
       ctx.stroke();
 
@@ -587,6 +590,7 @@ window.onload = function() {
           person_ride_on_elevator[i] = -1;
           person_near_elevator_num[i] = Math.floor(Math.random() * NUM_OF_ELEVATORS);
           person_angry_gauge[i] = 0;
+          person_size[i] = Math.floor(Math.random() * 10);
           break;
         }
       }
