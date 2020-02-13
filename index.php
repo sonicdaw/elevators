@@ -487,6 +487,7 @@ window.onload = function() {
     for(var i = 0; i < NUM_OF_PEOPLE; i++){
       for(var e = 0; e < NUM_OF_ELEVATORS; e++){
 //        if( person_x[i] == getElevatorCenterX(e)){   					// x axis is e elevator
+       if(person_in_field[i] == true){
         if( getElevator(person_x[i]) == e){
           if( person_ride_on[i] == false && elevator_y[e] == getFloorY(person_current_floor[i])){		// elevator y is person current floor Y and not ride on
             person_ride_on[i] = true;
@@ -497,6 +498,7 @@ window.onload = function() {
             }
           }
         }
+       }
       }
     }
 
