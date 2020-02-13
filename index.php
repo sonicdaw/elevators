@@ -66,6 +66,7 @@ window.onload = function() {
     elevator_ride_on[i] = false;
   }
 
+  var person_in_field = new Array(NUM_OF_PEOPLE);
   var person_x =  new Array(NUM_OF_PEOPLE);
   var person_current_floor =  new Array(NUM_OF_PEOPLE);
   var person_target_floor =   new Array(NUM_OF_PEOPLE);
@@ -78,6 +79,7 @@ window.onload = function() {
 
   for(var i = 0; i < NUM_OF_PEOPLE; i++)
   {
+    person_in_field[i] = false;
     person_x[i] = -1;
     person_current_floor[i] = 4;	// gound floor
     person_target_floor[i] = 1;
@@ -341,7 +343,7 @@ window.onload = function() {
     // Draw Persons
     for(var i = 0; i < NUM_OF_PEOPLE; i++){
 
-     if(person_x[i] >= 0){
+     if(person_in_field[i] == true){
       var person_y;
       if( person_ride_on[i] == false){
         person_y = getFloorBottomY(person_current_floor[i]);
@@ -453,7 +455,7 @@ window.onload = function() {
 
     // move persons
     for(var i = 0; i < NUM_OF_PEOPLE; i++){
-     if(person_x[i] >= 0){
+     if(person_in_field[i] == true){
       // algorithm
 
       // find near elevator
@@ -500,7 +502,7 @@ window.onload = function() {
 
     // arrived
     for(var i = 0; i < NUM_OF_PEOPLE; i++){
-      if(person_x[i] > 0 && person_ride_on[i] == true && elevator_ride_on[person_ride_on_elevator[i]] == true){		// person rides on elevator
+      if(person_in_field[i] == true && person_ride_on[i] == true && elevator_ride_on[person_ride_on_elevator[i]] == true){		// person rides on elevator
 
         if( elevator_y[person_ride_on_elevator[i]] == getFloorY(person_target_floor[i])){	// arrived!
             for(var j = 0; j < NUM_OF_ARRIVED; j++){	// for drawing arrived!
@@ -514,7 +516,7 @@ window.onload = function() {
               }
             }
 
-            person_x[i] = -1;	// out of game
+            person_in_field[i] = false;	// out of game
             person_ride_on[i] = false;
         }
       }
@@ -525,7 +527,7 @@ window.onload = function() {
       if(elevator_ride_on[e] == true){
         var no_person_in_the_elevator = true;
         for(var i = 0; i < NUM_OF_PEOPLE; i++){
-          if(person_x[i] > 0 && e == person_ride_on_elevator[i]){
+          if(person_in_field[i] == true && e == person_ride_on_elevator[i]){
             no_person_in_the_elevator = false;
 
             // elevator is on the target floor and this person is not on the target floor. update elevator target floow
@@ -571,7 +573,7 @@ window.onload = function() {
     if( counter == 0){
       for(var i = 0; i < NUM_OF_PEOPLE; i++)
       {
-        if( person_x[i] == -1){
+        if( person_in_field[i] == false ){
           if(Math.random() * 10 > 5){
             person_x[i] = 0;
           }else{
@@ -586,6 +588,7 @@ window.onload = function() {
           while(person_current_floor[i] == person_target_floor[i]){
             person_target_floor[i] = Math.floor(Math.random() * NUM_OF_FLOORS + 1);
           }
+          person_in_field[i] = true;
           person_ride_on[i] = false;
           person_ride_on_elevator[i] = -1;
           person_near_elevator_num[i] = Math.floor(Math.random() * NUM_OF_ELEVATORS);
