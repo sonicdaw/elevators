@@ -116,6 +116,10 @@ window.onload = function() {
 
   var ctx = canvas.getContext('2d');
   var interval = 10;
+
+  var pre_mouseX = -1;
+  var pre_mouseY = -1;
+
 //  var elevator;
 
   // ----------------------------------------------------------------
@@ -139,7 +143,10 @@ window.onload = function() {
     adjustLocation(e);
     event.preventDefault();
 
+    if (pre_mouseX == mouseX && pre_mouseY == mouseY) return false;
     touchHoldElevator = find_elevator_and_floor()
+    pre_mouseX = mouseX;
+    pre_mouseY = mouseY;
 
     return false;
   }
@@ -154,6 +161,9 @@ window.onload = function() {
   canvas.ontouchend=function(e){
     adjustLocation(e);
     touchHoldElevator = -1;
+    pre_mouseX = -1;
+    pre_mouseY = -1;
+
     return false;
   }
 
