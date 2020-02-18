@@ -450,8 +450,6 @@ window.onload = function() {
 
     // move elevator
     for(var i = 0; i < NUM_OF_ELEVATORS; i++){
-     if(touchHoldElevator == i && elevator_ride_on[i] == false){
-     }else{
       if(elevator_y[i] > getFloorY(elevator_target_floor[i])) {elevator_y[i] -= elevator_vy[i];};
       if(elevator_y[i] < getFloorY(elevator_target_floor[i])) {elevator_y[i] += elevator_vy[i];};
 
@@ -460,7 +458,6 @@ window.onload = function() {
       elevator_vy[i] = elevator_vy[i] + elevator_vvy[i];
       if(elevator_vy[i] > 1)  {elevator_vy[i]--;}
       if(elevator_vy[i] <= 0) {elevator_vy[i] = 1;}
-     }
     }
 
     // move persons
@@ -500,12 +497,14 @@ window.onload = function() {
        if(person_in_field[i] == true){
         if( getElevator(person_x[i]) == e){
           if( person_ride_on[i] == false && elevator_y[e] == getFloorY(person_current_floor[i])){		// elevator y is person current floor Y and not ride on
+           if( touchHoldElevator != e ){  // not touch hold elevator
             person_ride_on[i] = true;
             person_ride_on_elevator[i] = e;
             if(elevator_ride_on[e] == false){
               elevator_ride_on[e] = true;
               elevator_target_floor[e] = person_target_floor[i];
             }
+           }
           }
         }
        }
