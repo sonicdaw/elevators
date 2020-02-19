@@ -117,8 +117,10 @@ window.onload = function() {
   var ctx = canvas.getContext('2d');
   var interval = 10;
 
-  var pre_mouseX = -1;
-  var pre_mouseY = -1;
+  var touchstart_mouseX = -1;
+  var touchstart_mouseY = -1;
+  var touchstartTime = 0;
+  var touchTime = 1000;
 
 //  var elevator;
 
@@ -143,10 +145,11 @@ window.onload = function() {
     adjustLocation(e);
     event.preventDefault();
 
-    if (pre_mouseX == mouseX && pre_mouseY == mouseY) return false;
-    touchHoldElevator = find_elevator_and_floor()
-    pre_mouseX = mouseX;
-    pre_mouseY = mouseY;
+    if (touchstart_mouseX == mouseX && touchstart_mouseY == mouseY) return false;
+    touchstart_mouseX = mouseX;
+    touchstart_mouseY = mouseY;
+    touchstartTime = performance.now();
+    touchHoldElevator = find_elevator_and_floor();
 
     return false;
   }
@@ -159,10 +162,18 @@ window.onload = function() {
   }
 
   canvas.ontouchend=function(e){
+    touchTime = performance.now() - touchstartTime;
+    e=event.changedTouches[0];    // first touch only
     adjustLocation(e);
+
+    if (touchHoldElevator == getElevator(mouseX)){
+       find_elevator_and_floor();
+    }
     touchHoldElevator = -1;
-    pre_mouseX = -1;
-    pre_mouseY = -1;
+    touchstart_mouseX = -1;
+    touchstart_mouseY = -1;
+    touchstartTime = 0;
+    touchTime = 1000;
 
     return false;
   }
@@ -172,7 +183,11 @@ window.onload = function() {
     var elevator = getElevator(mouseX);
     if(elevator_ride_on[elevator] == false){
       elevator_target_floor[elevator] = getFloor(mouseY);
-      if(elevator_vvy[elevator]<10){ elevator_vvy[elevator] += 4;}
+
+      var elevator_speed = Math.floor(Math.abs(mouseY - touchstart_mouseY) / ELEVATOR_HEIGHT * (800 / touchTime));
+      if ( elevator_speed < 4) elevator_speed = 4;
+      if ( elevator_speed > 8) elevator_speed = 8;
+      if(elevator_vvy[elevator]<10){ elevator_vvy[elevator] += elevator_speed;}
 
       // touch animation
       touchX = elevator;
