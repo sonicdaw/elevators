@@ -166,9 +166,10 @@ window.onload = function() {
     e=event.changedTouches[0];    // first touch only
     adjustLocation(e);
 
-    if (touchHoldElevator == getElevator(mouseX)){
-       find_elevator_and_floor();
+    if (Math.abs(touchHoldElevator - getElevator(mouseX)) < 2){
+       mouseX = touchstart_mouseX;
     }
+    find_elevator_and_floor();
     touchHoldElevator = -1;
     touchstart_mouseX = -1;
     touchstart_mouseY = -1;
