@@ -237,6 +237,19 @@ window.onload = function() {
     return Math.floor(elevator_num);
   }
 
+  function getElevatorOnPerson(X, person_width) {
+    for(var i = 0; i < NUM_OF_ELEVATORS; i++){
+      if(X > ELEVATOR_WIDTH * i       + LEFT_OFFSET                  + Math.abs(person_width) &&
+         X < ELEVATOR_WIDTH * i       + LEFT_OFFSET + ELEVATOR_WIDTH - Math.abs(person_width)){
+         return i;
+      }
+      if(X == Math.floor(ELEVATOR_WIDTH * i       + LEFT_OFFSET + ELEVATOR_WIDTH / 2)){  // center check for large size
+         return i;
+      }
+    }
+    return -1;
+  }
+
   // Count Max for next person in. (Small = Busy)
   function countMaxForNextPersonIn(){
     var count = 80;
@@ -511,7 +524,7 @@ window.onload = function() {
       for(var e = 0; e < NUM_OF_ELEVATORS; e++){
 //        if( person_x[i] == getElevatorCenterX(e)){   					// x axis is e elevator
        if(person_in_field[i] == true){
-        if( getElevator(person_x[i]) == e){
+        if( getElevatorOnPerson(person_x[i], 5 * person_size[i]) == e){
           if( person_ride_on[i] == false && elevator_y[e] == getFloorY(person_current_floor[i])){		// elevator y is person current floor Y and not ride on
            if( touchHoldElevator != e ){  // not touch hold elevator
             person_ride_on[i] = true;
