@@ -12,6 +12,7 @@ if($field_height == 0) $field_height = 600;
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 </head>
 <body><CENTER>
+<button id="play">BGM</button>
 <a href="http://entatonic.net/elevators/index.php">4x4</a> 
 <a href="http://entatonic.net/elevators/index.php?floor=8&elevator=4">4x8</a> 
 <a href="http://entatonic.net/elevators/index.php?floor=7&elevator=2">2x7</a> 
@@ -651,13 +652,11 @@ window.onload = function() {
 
 
 // play bgm
-  var AUDIO_LIST = {
-    "music00": new Audio("./Ant_Work.mp3")
-  };
-  for(var i in AUDIO_LIST){
-//	AUDIO_LIST[i].load();
-  }
-//  AUDIO_LIST["music00"].play();
+  document.getElementById('play').addEventListener('click', function () {
+    var audio = new Audio('./Ant_Work.mp3');
+    audio.load();
+    audio.play();
+  });
 
   move();
 };
