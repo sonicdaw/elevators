@@ -655,6 +655,7 @@ window.onload = function() {
   document.getElementById('play').addEventListener('click', function () {
     var audio = new Audio('./Ant_Work.mp3');
     audio.load();
+    audio.loop = true;
     audio.play();
   });
 
