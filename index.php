@@ -58,6 +58,7 @@ window.onload = function() {
   var elevator_vvy =  new Array(NUM_OF_ELEVATORS);
   var elevator_target_floor =  new Array(NUM_OF_ELEVATORS);
   var elevator_ride_on = new Array(NUM_OF_ELEVATORS);
+  var elevator_combo = new Array(NUM_OF_ELEVATORS);
   for(var i = 0; i < NUM_OF_ELEVATORS; i++)
   {
     elevator_target_floor[i] = 1;  // ground floor
@@ -65,6 +66,7 @@ window.onload = function() {
     elevator_vy[i] = 1;
     elevator_vvy[i] = 0;
     elevator_ride_on[i] = false;
+    elevator_combo[i] = 1;
   }
 
   var person_in_field = new Array(NUM_OF_PEOPLE);
@@ -96,12 +98,14 @@ window.onload = function() {
   var arrived_x = new Array(NUM_OF_ARRIVED);
   var arrived_y = new Array(NUM_OF_ARRIVED);
   var arrived_counter = new Array(NUM_OF_ARRIVED);
+  var arrived_score = new Array(NUM_OF_ARRIVED);
 
   for(var i = 0; i < NUM_OF_ARRIVED; i++)
   {
     arrived_x[i] = 0;
     arrived_y[i] = 0;
     arrived_counter[i] = 0;
+    arrived_score[i] = 0;
   }
 
   var mouseX, mouseY;
@@ -428,8 +432,8 @@ window.onload = function() {
     {
       if(arrived_counter[i] > 0){
         ctx.fillStyle = 'rgba(0, 180, 0, ' + arrived_counter[i] / ARRIVED_COUNTER_MAX + ')';
-        ctx.font = 12 + 10 * ((ARRIVED_COUNTER_MAX - arrived_counter[i]) / ARRIVED_COUNTER_MAX) + "pt 'Times New Roman'";
-        ctx.fillText("OK", arrived_x[i], arrived_y[i] + ELEVATOR_HEIGHT / 2 * (arrived_counter[i] / ARRIVED_COUNTER_MAX));
+        ctx.font = 12 + 20 * ((ARRIVED_COUNTER_MAX - arrived_counter[i]) / ARRIVED_COUNTER_MAX) * arrived_score[i] / 3 + "pt 'Times New Roman'";
+        ctx.fillText("+" + arrived_score[i] * 10, arrived_x[i], arrived_y[i] + ELEVATOR_HEIGHT / 2 * (arrived_counter[i] / ARRIVED_COUNTER_MAX));
         arrived_counter[i]--;
       }
     }
@@ -551,6 +555,8 @@ window.onload = function() {
                 arrived_x[j] = person_x[i];
                 arrived_y[j] = getFloorBottomY(person_target_floor[i]) - ELEVATOR_HEIGHT / 2 + person_offset;
                 arrived_counter[j] = ARRIVED_COUNTER_MAX;
+                arrived_score[j] = elevator_combo[person_ride_on_elevator[i]];
+                elevator_combo[person_ride_on_elevator[i]]++;
                 building_value += 100;
                 if(building_value > BUILDING_VALUE_MAX) building_value = BUILDING_VALUE_MAX;
                 break;
@@ -581,6 +587,7 @@ window.onload = function() {
         }
         if(no_person_in_the_elevator == true){
            elevator_ride_on[e] = false;
+           elevator_combo[e] = 1;
         }
       }
     }
