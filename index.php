@@ -33,6 +33,8 @@ window.onload = function() {
   const NUM_OF_PEOPLE = 1000;
   const DEFAULT_FONT = "bold 8pt 'Times New Roman'";
 
+  var score = 0;
+  var score_on_screen = 0;
   var time_hour = 6;
   var time_minute = 0;
   var time_sec = 0;
@@ -483,6 +485,12 @@ window.onload = function() {
     }
     ctx.font = DEFAULT_FONT;
 
+    // Draw Score
+    if(score > score_on_screen) score_on_screen++;
+    ctx.textAlign = "left";
+    ctx.fillText(score_on_screen, LEFT_OFFSET, TOP_OFFSET);
+    ctx.textAlign = "center";
+
     // move elevator
     for(var i = 0; i < NUM_OF_ELEVATORS; i++){
       if(elevator_y[i] > getFloorY(elevator_target_floor[i])) {elevator_y[i] -= elevator_vy[i];};
@@ -560,6 +568,7 @@ window.onload = function() {
                 elevator_combo[person_ride_on_elevator[i]]++;
                 building_value += 100;
                 if(building_value > BUILDING_VALUE_MAX) building_value = BUILDING_VALUE_MAX;
+                score += arrived_score[i] * 10;
                 break;
               }
             }
