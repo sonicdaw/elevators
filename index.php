@@ -568,7 +568,7 @@ window.onload = function() {
                 elevator_combo[person_ride_on_elevator[i]]++;
                 building_value += 100;
                 if(building_value > BUILDING_VALUE_MAX) building_value = BUILDING_VALUE_MAX;
-                score += arrived_score[i] * 10;
+                score += arrived_score[j] * 10;
                 break;
               }
             }
