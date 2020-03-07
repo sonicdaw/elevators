@@ -685,14 +685,14 @@ window.onload = function() {
 
 // play bgm
   document.getElementById('play').addEventListener('click', function () {
-    var audio = new Audio('./Ant_Work.mp3');
+    var audio = new Audio('./music/Ant_Work.mp3');
     audio.load();
     audio.loop = true;
     audio.play();
   });
 
   document.getElementById('play2').addEventListener('click', function () {
-    var audio = new Audio('./Gm7FDmBb.m4a');
+    var audio = new Audio('./music/02012020.m4a');
     audio.load();
     audio.loop = true;
     audio.play();
