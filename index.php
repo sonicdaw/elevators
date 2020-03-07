@@ -355,7 +355,7 @@ window.onload = function() {
     // Draw Elevators
     for(var i = 0; i < NUM_OF_ELEVATORS; i++){
       if(elevator_ride_on[i] == true) {
-        ctx.strokeStyle = "#f00";
+        ctx.strokeStyle = "#ccc";
       }else{
         ctx.strokeStyle = "#33f";
       }
