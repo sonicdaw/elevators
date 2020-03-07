@@ -14,6 +14,7 @@ if($field_height == 0) $field_height = 600;
 <body><CENTER>
 <button id="play">BGM</button>
 <button id="play2">BGM2</button>
+<button id="se">SE</button>
 <a href="http://entatonic.net/elevators/index.php">4x4</a> 
 <a href="http://entatonic.net/elevators/index.php?floor=8&elevator=4">4x8</a> 
 <a href="http://entatonic.net/elevators/index.php?floor=7&elevator=2">2x7</a> 
@@ -129,6 +130,11 @@ window.onload = function() {
   var touchstart_mouseY = -1;
   var touchstartTime = 0;
   var touchTime = 1000;
+
+  var se_elevator_arrived_high;
+  var se_elevator_arrived_mid;
+  var se_elevator_arrived_low;
+  var sound_loaded = false;
 
 //  var elevator;
 
@@ -569,6 +575,15 @@ window.onload = function() {
                 building_value += 100;
                 if(building_value > BUILDING_VALUE_MAX) building_value = BUILDING_VALUE_MAX;
                 score += arrived_score[j] * 10;
+                if(sound_loaded){
+                   if(arrived_score[j] < 3){
+                     se_elevator_arrived_low.play();
+                   }else if(arrived_score[j] < 6){
+                     se_elevator_arrived_mid.play();
+                   }else{
+                     se_elevator_arrived_high.play();
+                   }
+                }
                 break;
               }
             }
@@ -681,6 +696,16 @@ window.onload = function() {
     audio.load();
     audio.loop = true;
     audio.play();
+  });
+
+  document.getElementById('se').addEventListener('click', function () {
+    se_elevator_arrived_high = new Audio('./sound/se_elevator_arrived_high.m4a');
+    se_elevator_arrived_mid = new Audio('./sound/se_elevator_arrived_mid.m4a');
+    se_elevator_arrived_low = new Audio('./sound/se_elevator_arrived_low.m4a');
+    se_elevator_arrived_high.load();
+    se_elevator_arrived_mid.load();
+    se_elevator_arrived_low.load();
+    sound_loaded = true;
   });
 
   move();
