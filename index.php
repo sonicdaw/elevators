@@ -357,7 +357,11 @@ window.onload = function() {
       if(elevator_ride_on[i] == true) {
         ctx.strokeStyle = "#ccc";
       }else{
-        ctx.strokeStyle = "#33f";
+        if(touchHoldElevator == i){
+          ctx.strokeStyle = "#f00"; // touch hold
+        }else{
+          ctx.strokeStyle = "#33f"; // not touch hold
+        }
       }
       ctx.beginPath();
       ctx.rect(ELEVATOR_WIDTH * i       + LEFT_OFFSET, elevator_y[i],
@@ -549,7 +553,6 @@ window.onload = function() {
           if( person_ride_on[i] == false && elevator_y[e] == getFloorY(person_current_floor[i])){		// elevator y is person current floor Y and not ride on
            if( touchHoldElevator != e ){  // not touch hold elevator
             person_ride_on[i] = true;
-            person_angry_gauge[i] = 0;
             person_ride_on_elevator[i] = e;
             if(elevator_ride_on[e] == false){
               elevator_ride_on[e] = true;
