@@ -494,7 +494,8 @@ window.onload = function() {
     // Draw Score
     if(score > score_on_screen) score_on_screen++;
     ctx.textAlign = "left";
-    ctx.fillText(score_on_screen, LEFT_OFFSET, TOP_OFFSET);
+    ctx.font = "10pt 'Times New Roman'";
+    ctx.fillText("SCORE: " + score_on_screen, LEFT_OFFSET, TOP_OFFSET);
     ctx.textAlign = "center";
 
     // move elevator
