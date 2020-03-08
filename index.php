@@ -131,6 +131,8 @@ window.onload = function() {
   var touchstartTime = 0;
   var touchTime = 1000;
 
+  var bgm_1;
+  var bgm_2;
   var se_elevator_arrived_high;
   var se_elevator_arrived_mid;
   var se_elevator_arrived_low;
@@ -690,17 +692,29 @@ window.onload = function() {
 
 // play bgm
   document.getElementById('play').addEventListener('click', function () {
-    var audio = new Audio('./music/Ant_Work.mp3');
-    audio.load();
-    audio.loop = true;
-    audio.play();
+    if(bgm_2!=null) bgm_2.pause();
+    if(bgm_1==null){
+      bgm_1 = new Audio('./music/Ant_Work.mp3');
+      bgm_1.load();
+      bgm_1.loop = true;
+    }else{
+      bgm_1.pause();
+      bgm_1.currentTime = 0;
+    }
+    bgm_1.play();
   });
 
   document.getElementById('play2').addEventListener('click', function () {
-    var audio = new Audio('./music/02012020.m4a');
-    audio.load();
-    audio.loop = true;
-    audio.play();
+    if(bgm_1!=null) bgm_1.pause();
+    if(bgm_2==null){
+      bgm_2 = new Audio('./music/02012020.m4a');
+      bgm_2.load();
+      bgm_2.loop = true;
+    }else{
+      bgm_2.pause();
+      bgm_2.currentTime = 0;
+    }
+    bgm_2.play();
   });
 
   document.getElementById('se').addEventListener('click', function () {
