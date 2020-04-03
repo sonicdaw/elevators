@@ -461,13 +461,6 @@ window.onload = function() {
              BUILDING_VALUE_WIDTH - 4, building_value_height);
     ctx.stroke();
 
-    if(game_over == true){
-        ctx.fillStyle = "#E9967A";
-        ctx.font = 40 + "pt 'Times New Roman'";;
-        ctx.fillText("Game Over", WIDTH / 2, HEIGHT / 2);
-       return;
-    }
-
     // Draw Time
     ctx.fillStyle = 'rgba(0, 0, 0)';
     var time_size = 1;  // 0-1
@@ -502,6 +495,13 @@ window.onload = function() {
     ctx.font = "10pt 'Times New Roman'";
     ctx.fillText("SCORE: " + score_on_screen, LEFT_OFFSET, TOP_OFFSET);
     ctx.textAlign = "center";
+
+    if(game_over == true){
+        ctx.fillStyle = "#E9967A";
+        ctx.font = 40 + "pt 'Times New Roman'";;
+        ctx.fillText("Game Over", WIDTH / 2, HEIGHT / 2);
+       return;
+    }
 
     // move elevator
     for(var i = 0; i < NUM_OF_ELEVATORS; i++){
