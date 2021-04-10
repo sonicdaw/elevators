@@ -14,11 +14,11 @@ if($field_height == 0) $field_height = 600;
 <body><CENTER>
 <button id="play">BGM</button>
 <button id="play2">BGM2</button>
-<a href="http://entatonic.net/elevators/index.php">4x4</a> 
-<a href="http://entatonic.net/elevators/index.php?floor=8&elevator=4">4x8</a> 
-<a href="http://entatonic.net/elevators/index.php?floor=7&elevator=2">2x7</a> 
-<a href="http://entatonic.net/elevators/index.php?floor=10&elevator=10">6x10</a> 
-<a href="http://entatonic.net/elevators/index.php?floor=16&elevator=10">10x16</a><br>
+<a href="./index.php">4x4</a> 
+<a href="./index.php?floor=8&elevator=4">4x8</a> 
+<a href="./index.php?floor=7&elevator=2">2x7</a> 
+<a href="./index.php?floor=10&elevator=10">6x10</a> 
+<a href="./index.php?floor=16&elevator=10">10x16</a><br>
 <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
 <canvas id="cvs" width="300" height="<?php echo $field_height ?>"></canvas>
 <script type="text/javascript">
