@@ -130,6 +130,10 @@ window.onload = function() {
   var touchstartTime = 0;
   var touchTime = 1000;
 
+  var touchVisualizerX = -1;
+  var touchVisualizerY = -1;
+  var touchVisualizerCounter = 0;
+
   var bgm_1;
   var bgm_2;
   var se_elevator_arrived_high;
@@ -218,6 +222,10 @@ window.onload = function() {
     var rect = e.target.getBoundingClientRect();
     mouseX = e.clientX - rect.left;
     mouseY = e.clientY - rect.top;
+
+    touchVisualizerX = mouseX;
+    touchVisualizerY = mouseY;
+    touchVisualizerCounter = 30;
   } // -------------------------
 
 
@@ -324,6 +332,7 @@ window.onload = function() {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
     ctx.textAlign = "center";
     ctx.font = DEFAULT_FONT;
+    ctx.lineWidth = 1;
 
     // Draw Elevator Frame
     ctx.strokeStyle = "#eaa";
@@ -502,6 +511,21 @@ window.onload = function() {
         ctx.fillText("Game Over", WIDTH / 2, HEIGHT / 2);
        return;
     }
+
+    // Draw touch visualizer
+    ctx.lineWidth = 15;
+    if(touchVisualizerX != -1 && touchVisualizerY != -1){
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
+      ctx.arc(touchVisualizerX, touchVisualizerY, touchVisualizerCounter, 0, Math.PI*2, true);
+      ctx.stroke();
+      touchVisualizerCounter=touchVisualizerCounter-0.5;
+      if(touchVisualizerCounter<=0){
+        touchVisualizerX = -1;
+        touchVisualizerY = -1;
+      }
+    }
+    ctx.lineWidth = 1;
 
     // move elevator
     for(var i = 0; i < NUM_OF_ELEVATORS; i++){
