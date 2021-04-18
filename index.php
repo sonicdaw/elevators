@@ -519,7 +519,9 @@ window.onload = function() {
       ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
       ctx.arc(touchVisualizerX, touchVisualizerY, touchVisualizerCounter, 0, Math.PI*2, true);
       ctx.stroke();
-      touchVisualizerCounter=touchVisualizerCounter-0.5;
+      if(touchHoldElevator==-1){
+        touchVisualizerCounter=touchVisualizerCounter-0.5;
+      }
       if(touchVisualizerCounter<=0){
         touchVisualizerX = -1;
         touchVisualizerY = -1;
