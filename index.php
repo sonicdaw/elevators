@@ -148,7 +148,7 @@ window.onload = function() {
 
   // mouse
   canvas.onmousemove=function(e){
-    adjustLocation(e);
+    adjustLocationWithoutTouchVisualizer(e);
     return false;
   }
 
@@ -228,6 +228,13 @@ window.onload = function() {
     touchVisualizerCounter = 30;
   } // -------------------------
 
+
+  function adjustLocationWithoutTouchVisualizer(e){
+    // adjust
+    var rect = e.target.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+  }
 
   function getFloorBottomY(floor) {
     return Math.floor(ELEVATOR_HEIGHT * (NUM_OF_FLOORS - floor + 1) + TOP_OFFSET);
