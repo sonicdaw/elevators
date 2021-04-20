@@ -1,10 +1,8 @@
 <?php
 $num_of_floors = intval($_GET["floor"]);
 $num_of_elevators = intval($_GET["elevator"]);
-$field_height = intval($_GET["height"]);
 if($num_of_floors == 0) $num_of_floors = 4;
 if($num_of_elevators == 0) $num_of_elevators = 4;
-if($field_height == 0) $field_height = 600;
 ?><html>
 <head>
 <title>Elevators Proto</title>
@@ -20,16 +18,18 @@ if($field_height == 0) $field_height = 600;
 <a href="./index.php?floor=10&elevator=10">6x10</a> 
 <a href="./index.php?floor=16&elevator=10">10x16</a><br>
 <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
-<canvas id="cvs" width="300" height="<?php echo $field_height ?>"></canvas>
+<canvas id="cvs" />
 <script type="text/javascript">
 window.onload = function() {
 
-  const WIDTH = 300;
-  const HEIGHT = <?php echo $field_height ?>;
+  var WIDTH;
+  var HEIGHT;
+  var FIELD_WIDTH;
+  var FIELD_HEIGHT;
+  var ELEVATOR_WIDTH;
+  var ELEVATOR_HEIGHT;
   const LEFT_OFFSET = 10;
   const TOP_OFFSET = 10;
-  var FIELD_WIDTH = 280;
-  var FIELD_HEIGHT = HEIGHT - TOP_OFFSET * 2;
   const NUM_OF_PEOPLE = 1000;
   const DEFAULT_FONT = "bold 8pt 'Times New Roman'";
 
@@ -47,14 +47,20 @@ window.onload = function() {
   const BUILDING_VALUE_MAX = 10000;
   var building_value = BUILDING_VALUE_MAX;
   const BUILDING_VALUE_WIDTH = 20;
-  FIELD_WIDTH = FIELD_WIDTH - BUILDING_VALUE_WIDTH;
 
   var counter = 0;
   const NUM_OF_ELEVATORS = <?php echo $num_of_elevators ?>;
   const NUM_OF_FLOORS = <?php echo $num_of_floors ?>;
 
-  const ELEVATOR_WIDTH = FIELD_WIDTH / NUM_OF_ELEVATORS;
-  const ELEVATOR_HEIGHT = FIELD_HEIGHT / NUM_OF_FLOORS;
+  var canvas = document.getElementById('cvs');
+  if (!canvas.getContext) {
+    return false;
+  }
+
+  var ctx = canvas.getContext('2d');
+
+  fitCanvasSize();
+  window.onresize = fitCanvasSize;
 
   var elevator_y =  new Array(NUM_OF_ELEVATORS);
   var elevator_vy =  new Array(NUM_OF_ELEVATORS);
@@ -117,12 +123,7 @@ window.onload = function() {
   var touchViewCounter = 0;
   var touchHoldElevator = -1;
   var timer;
-  var canvas = document.getElementById('cvs');
-  if (!canvas.getContext) {
-    return false;
-  }
 
-  var ctx = canvas.getContext('2d');
   var interval = 10;
 
   var touchstart_mouseX = -1;
@@ -142,6 +143,21 @@ window.onload = function() {
   var sound_loaded = false;
 
 //  var elevator;
+  function fitCanvasSize() {
+    var w = document.documentElement.clientWidth;
+    var h = document.documentElement.clientHeight - 40;
+    if(w > 300) w = 300;
+    if(h > 600) h = 600;
+    canvas.width = w;
+    canvas.height = h;
+
+    WIDTH = w;
+    HEIGHT = h;
+    FIELD_WIDTH = WIDTH - BUILDING_VALUE_WIDTH - 20;
+    FIELD_HEIGHT = HEIGHT - TOP_OFFSET * 2;
+    ELEVATOR_WIDTH = FIELD_WIDTH / NUM_OF_ELEVATORS;
+    ELEVATOR_HEIGHT = FIELD_HEIGHT / NUM_OF_FLOORS;
+  }
 
   // ----------------------------------------------------------------
   // mouse or touch
