@@ -10,8 +10,7 @@ if($num_of_elevators == 0) $num_of_elevators = 4;
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 </head>
 <body><CENTER>
-<button id="play">BGM</button>
-<button id="play2">BGM2</button>
+<button id="play">Audio ON</button>
 <a href="./index.php">4x4</a> 
 <a href="./index.php?floor=8&elevator=4">4x8</a> 
 <a href="./index.php?floor=7&elevator=2">2x7</a> 
@@ -141,6 +140,7 @@ window.onload = function() {
   var se_elevator_arrived_mid;
   var se_elevator_arrived_low;
   var sound_loaded = false;
+  var playing_bgm = 0;
 
 //  var elevator;
   function fitCanvasSize() {
@@ -673,6 +673,23 @@ window.onload = function() {
       }
     }
 
+    // switch BGM
+    if(building_value < BUILDING_VALUE_MAX / 3 && playing_bgm == 1) {
+      if(bgm_1!=null) bgm_1.pause();
+      if(bgm_2!=null){
+         bgm_2.play();
+         playing_bgm = 2;
+      }
+    }
+
+    if(building_value >= BUILDING_VALUE_MAX / 3 && playing_bgm == 2) {
+      if(bgm_2!=null) bgm_2.pause();
+      if(bgm_1!=null){
+        bgm_1.play();
+        playing_bgm = 1;
+      }
+    }
+
     // Time count
     time_sec++;
     if(time_sec > time_sec_max - 1){
@@ -741,30 +758,21 @@ window.onload = function() {
 
 // play bgm
   document.getElementById('play').addEventListener('click', function () {
-    if(bgm_2!=null) bgm_2.pause();
     if(bgm_1==null){
       bgm_1 = new Audio('./music/Ant_Work.mp3');
       bgm_1.load();
       bgm_1.loop = true;
-    }else{
-      bgm_1.pause();
-      bgm_1.currentTime = 0;
-    }
-    bgm_1.play();
-    load_se();
-  });
-
-  document.getElementById('play2').addEventListener('click', function () {
-    if(bgm_1!=null) bgm_1.pause();
+      bgm_1.play();
+      playing_bgm = 1;
+    }//else{
+//      bgm_1.pause();
+//      bgm_1.currentTime = 0;
+//    }
     if(bgm_2==null){
       bgm_2 = new Audio('./music/02012020.m4a');
       bgm_2.load();
       bgm_2.loop = true;
-    }else{
-      bgm_2.pause();
-      bgm_2.currentTime = 0;
     }
-    bgm_2.play();
     load_se();
   });
 
