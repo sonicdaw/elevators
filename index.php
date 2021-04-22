@@ -39,7 +39,6 @@ window.onload = function() {
   var time_sec = 0;
   const time_minute_max = 60;
   const time_sec_max = 50;
-
   var game_over = false;
 
   // million dollar
@@ -67,15 +66,6 @@ window.onload = function() {
   var elevator_target_floor =  new Array(NUM_OF_ELEVATORS);
   var elevator_ride_on = new Array(NUM_OF_ELEVATORS);
   var elevator_combo = new Array(NUM_OF_ELEVATORS);
-  for(var i = 0; i < NUM_OF_ELEVATORS; i++)
-  {
-    elevator_target_floor[i] = 1;  // ground floor
-    elevator_y[i] = getFloorY(elevator_target_floor[i]);
-    elevator_vy[i] = 1;
-    elevator_vvy[i] = 0;
-    elevator_ride_on[i] = false;
-    elevator_combo[i] = 1;
-  }
 
   var person_in_field = new Array(NUM_OF_PEOPLE);
   var person_x =  new Array(NUM_OF_PEOPLE);
@@ -88,33 +78,12 @@ window.onload = function() {
   var person_offset = -11;
   var person_size = new Array(NUM_OF_PEOPLE);
 
-  for(var i = 0; i < NUM_OF_PEOPLE; i++)
-  {
-    person_in_field[i] = false;
-    person_x[i] = -1;
-    person_current_floor[i] = 4;	// gound floor
-    person_target_floor[i] = 1;
-    person_ride_on[i] = false;
-    person_ride_on_elevator[i] = -1;
-    person_near_elevator_num[i] = 0;
-    person_angry_gauge[i] = 0;
-    person_size[i] = 1;
-  }
-
   const NUM_OF_ARRIVED = 20;
   const ARRIVED_COUNTER_MAX = 200;
   var arrived_x = new Array(NUM_OF_ARRIVED);
   var arrived_y = new Array(NUM_OF_ARRIVED);
   var arrived_counter = new Array(NUM_OF_ARRIVED);
   var arrived_score = new Array(NUM_OF_ARRIVED);
-
-  for(var i = 0; i < NUM_OF_ARRIVED; i++)
-  {
-    arrived_x[i] = 0;
-    arrived_y[i] = 0;
-    arrived_counter[i] = 0;
-    arrived_score[i] = 0;
-  }
 
   var mouseX, mouseY;
   var touchX = 0;
@@ -141,6 +110,8 @@ window.onload = function() {
   var se_elevator_arrived_low;
   var sound_loaded = false;
   var playing_bgm = 0;
+
+  init_game();
 
 //  var elevator;
   function fitCanvasSize() {
@@ -214,6 +185,49 @@ window.onload = function() {
     return false;
   }
 
+  function init_game(){
+    score = 0;
+    score_on_screen = 0;
+    time_hour = 6;
+    time_minute = 0;
+    time_sec = 0;
+
+    game_over = false;
+    building_value = BUILDING_VALUE_MAX;
+    counter = 0;
+    for(var i = 0; i < NUM_OF_ELEVATORS; i++)
+    {
+      elevator_target_floor[i] = 1;  // ground floor
+      elevator_y[i] = getFloorY(elevator_target_floor[i]);
+      elevator_vy[i] = 1;
+      elevator_vvy[i] = 0;
+      elevator_ride_on[i] = false;
+      elevator_combo[i] = 1;
+    }
+
+    for(var i = 0; i < NUM_OF_PEOPLE; i++)
+    {
+      person_in_field[i] = false;
+      person_x[i] = -1;
+      person_current_floor[i] = 4;	// gound floor
+      person_target_floor[i] = 1;
+      person_ride_on[i] = false;
+      person_ride_on_elevator[i] = -1;
+      person_near_elevator_num[i] = 0;
+      person_angry_gauge[i] = 0;
+      person_size[i] = 1;
+    }
+
+    for(var i = 0; i < NUM_OF_ARRIVED; i++)
+    {
+      arrived_x[i] = 0;
+      arrived_y[i] = 0;
+      arrived_counter[i] = 0;
+      arrived_score[i] = 0;
+    }
+
+  }
+
   function find_elevator_and_floor(){
     // find elevator, floor
     var elevator = getElevator(mouseX);
@@ -242,6 +256,16 @@ window.onload = function() {
     touchVisualizerX = mouseX;
     touchVisualizerY = mouseY;
     touchVisualizerCounter = 30;
+
+    if(game_over == true){
+      init_game();
+      game_over = false;
+      if(bgm_2!=null)bgm_2.pause();
+      if(bgm_1!=null){
+        bgm_1.pause();
+        bgm_1.currentTime = 0;
+      }
+    }
   } // -------------------------
 
 
@@ -764,10 +788,7 @@ window.onload = function() {
       bgm_1.loop = true;
       bgm_1.play();
       playing_bgm = 1;
-    }//else{
-//      bgm_1.pause();
-//      bgm_1.currentTime = 0;
-//    }
+    }
     if(bgm_2==null){
       bgm_2 = new Audio('./music/02012020.m4a');
       bgm_2.load();
