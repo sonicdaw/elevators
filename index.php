@@ -556,6 +556,7 @@ window.onload = function() {
         ctx.fillStyle = "#E9967A";
         ctx.font = 40 + "pt 'Times New Roman'";;
         ctx.fillText("Game Over", WIDTH / 2, HEIGHT / 2);
+        score_on_screen = score;
        return;
     }
 
