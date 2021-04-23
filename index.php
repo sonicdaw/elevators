@@ -661,7 +661,7 @@ window.onload = function() {
                 arrived_counter[j] = ARRIVED_COUNTER_MAX;
                 arrived_score[j] = elevator_combo[person_ride_on_elevator[i]];
                 elevator_combo[person_ride_on_elevator[i]]++;
-                building_value += 100;
+                building_value += 80 + arrived_score[j] * 20;
                 if(building_value > BUILDING_VALUE_MAX) building_value = BUILDING_VALUE_MAX;
                 score += arrived_score[j] * 10;
                 if(sound_loaded){
