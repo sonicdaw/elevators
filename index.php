@@ -40,6 +40,7 @@ window.onload = function() {
   const time_minute_max = 60;
   const time_sec_max = 50;
   var game_over = false;
+  var game_over_touchlock = 0;
 
   // million dollar
   const BUILDING_VALUE_MAX = 10000;
@@ -193,6 +194,7 @@ window.onload = function() {
     time_sec = 0;
 
     game_over = false;
+    game_over_touchlock = 0;
     building_value = BUILDING_VALUE_MAX;
     counter = 0;
     for(var i = 0; i < NUM_OF_ELEVATORS; i++)
@@ -257,7 +259,7 @@ window.onload = function() {
     touchVisualizerY = mouseY;
     touchVisualizerCounter = 30;
 
-    if(game_over == true){
+    if(game_over == true && game_over_touchlock == 0){
       init_game();
       game_over = false;
       if(bgm_2!=null)bgm_2.pause();
@@ -552,10 +554,16 @@ window.onload = function() {
     ctx.fillText("SCORE: " + score_on_screen, LEFT_OFFSET, TOP_OFFSET);
     ctx.textAlign = "center";
 
+    if(game_over_touchlock > 0) game_over_touchlock--;
     if(game_over == true){
         ctx.fillStyle = "#E9967A";
-        ctx.font = 40 + "pt 'Times New Roman'";;
+        ctx.font = 40 + "pt 'Times New Roman'";
         ctx.fillText("Game Over", WIDTH / 2, HEIGHT / 2);
+
+        if(game_over_touchlock == 0){
+          ctx.font = 30 + "pt 'Times New Roman'";
+          ctx.fillText("Tap to replay", WIDTH / 2, HEIGHT * 2 / 3);
+        }
         score_on_screen = score;
        return;
     }
@@ -613,7 +621,7 @@ window.onload = function() {
         person_angry_gauge[i]++;	// add angry guage
         if(person_angry_gauge[i] > 255){
           building_value--;
-          if(building_value < 0) game_over = true;		// GAME OVER
+          if(building_value < 0) {game_over = true; game_over_touchlock = 400;}		// GAME OVER
         }
       }
      }
