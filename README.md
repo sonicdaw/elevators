@@ -6,8 +6,9 @@ Click here to play
 https://elebeater.net/  
 
 BGM
- - BGM soundorbis / Ant Work https://note.mu/soundorbis/n/n4470d1faf50c
- - BGM2 Iwakiri / 02012020
+ - BGM soundorbis / Ant Work https://note.mu/soundorbis/n/n4470d1faf50c(Old Link)
+ - BGM Masahide Sumiyoshi / Another Chopin Etude OP.10 No.1 https://linkco.re/q327DdRT
+ - BGM(Alert) Iwakiri / 02012020
 
 ## How to play
 The number attached on the person is the destination floor.  

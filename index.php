@@ -37,6 +37,7 @@ window.onload = function() {
   var time_hour = 6;
   var time_minute = 0;
   var time_sec = 0;
+  var time_day = 0;
   const time_minute_max = 60;
   const time_sec_max = 50;
   var game_over = false;
@@ -104,8 +105,7 @@ window.onload = function() {
   var touchVisualizerY = -1;
   var touchVisualizerCounter = 0;
 
-  var bgm_1;
-  var bgm_2;
+  var bgm_1, bgm_2, bgm_alert;
   var se_elevator_arrived_high;
   var se_elevator_arrived_mid;
   var se_elevator_arrived_low;
@@ -192,6 +192,7 @@ window.onload = function() {
     time_hour = 6;
     time_minute = 0;
     time_sec = 0;
+    time_day = 0;
 
     game_over = false;
     game_over_touchlock = 0;
@@ -262,11 +263,7 @@ window.onload = function() {
     if(game_over == true && game_over_touchlock == 0){
       init_game();
       game_over = false;
-      if(bgm_2!=null)bgm_2.pause();
-      if(bgm_1!=null){
-        bgm_1.pause();
-        bgm_1.currentTime = 0;
-      }
+      bgm_stop();
     }
   } // -------------------------
 
@@ -707,19 +704,32 @@ window.onload = function() {
     }
 
     // switch BGM
-    if(building_value < BUILDING_VALUE_MAX / 3 && playing_bgm == 1) {
-      if(bgm_1!=null) bgm_1.pause();
-      if(bgm_2!=null){
-         bgm_2.play();
-         playing_bgm = 2;
+    if(building_value < BUILDING_VALUE_MAX / 3) { // Alert BGM
+      if(playing_bgm != 3){
+        bgm_pause();
+        if(bgm_alert!=null){
+          bgm_alert.currentTime = 0;
+          bgm_alert.play();
+          playing_bgm = 3;
+        }
       }
-    }
-
-    if(building_value >= BUILDING_VALUE_MAX / 3 && playing_bgm == 2) {
-      if(bgm_2!=null) bgm_2.pause();
-      if(bgm_1!=null){
-        bgm_1.play();
-        playing_bgm = 1;
+    }else{                                        // Game BGM
+      if(time_day == 0){     
+        if(playing_bgm !=1 ){                                         // BGM1 (First Day)
+          bgm_pause();
+          if(bgm_1!=null){
+            bgm_1.play();
+            playing_bgm = 1;
+          }
+        }
+      }else{                                                          // BGM2 (Second Day or later)
+        if(playing_bgm !=2 ){
+          bgm_pause();
+          if(bgm_2!=null){
+            bgm_2.play();
+            playing_bgm = 2;
+          }
+        }
       }
     }
 
@@ -734,6 +744,7 @@ window.onload = function() {
       time_minute = 0;
     }
     if(time_hour > 23){
+      time_day++;
       time_hour = 0;
     }
 
@@ -799,12 +810,29 @@ window.onload = function() {
       playing_bgm = 1;
     }
     if(bgm_2==null){
-      bgm_2 = new Audio('./music/02012020.m4a');
+      bgm_2 = new Audio('./music/Etude_Plus_Op10No1_MSumi.mp3');
       bgm_2.load();
       bgm_2.loop = true;
     }
+    if(bgm_alert==null){
+      bgm_alert = new Audio('./music/02012020.m4a');
+      bgm_alert.load();
+      bgm_alert.loop = true;
+    }
     load_se();
   });
+
+  function bgm_pause(){
+    if(bgm_1!=null) { bgm_1.pause(); }
+    if(bgm_2!=null) { bgm_2.pause(); }
+    if(bgm_alert!=null) {bgm_alert.pause(); }
+  }
+
+  function bgm_stop(){
+    if(bgm_1!=null) { bgm_1.pause(); bgm_1.currentTime = 0;}
+    if(bgm_2!=null) { bgm_2.pause(); bgm_2.currentTime = 0;}
+    if(bgm_alert!=null) {bgm_alert.pause(); bgm_alert.currentTime = 0;}
+  }
 
   function load_se(){
     if(!sound_loaded){
