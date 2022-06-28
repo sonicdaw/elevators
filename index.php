@@ -14,8 +14,10 @@ if($num_of_elevators == 0) $num_of_elevators = 4;
 <a href="./index.php">4x4</a> 
 <a href="./index.php?floor=8&elevator=4">4x8</a> 
 <a href="./index.php?floor=7&elevator=2">2x7</a> 
-<a href="./index.php?floor=10&elevator=10">6x10</a> 
-<a href="./index.php?floor=16&elevator=10">10x16</a><br>
+<a href="./index.php?floor=16&elevator=10">10x16</a> 
+<a href="https://github.com/sonicdaw/elevators/blob/master/index.php" target="_blank">Code</a> 
+HowToPlay(<a href="https://elebeater.net/Elebeater.pdf" target="_blank">JP</a>/
+<a href="https://github.com/sonicdaw/elevators" target="_blank">EN</a>)<br>
 <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
 <canvas id="cvs" />
 <script type="text/javascript">
