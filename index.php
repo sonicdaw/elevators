@@ -5,7 +5,7 @@ if($num_of_floors == 0) $num_of_floors = 4;
 if($num_of_elevators == 0) $num_of_elevators = 4;
 ?><html>
 <head>
-<title>Elevators Proto</title>
+<title>Elebeater</title>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 </head>
