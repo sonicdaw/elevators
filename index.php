@@ -23,12 +23,8 @@ HowToPlay(<a href="https://elebeater.net/Elebeater.pdf" target="_blank">JP</a>/
 <script type="text/javascript">
 window.onload = function() {
 
-  var WIDTH;
-  var HEIGHT;
-  var FIELD_WIDTH;
-  var FIELD_HEIGHT;
-  var ELEVATOR_WIDTH;
-  var ELEVATOR_HEIGHT;
+  var WIDTH, HEIGHT;
+  var FIELD_WIDTH, FIELD_HEIGHT, ELEVATOR_WIDTH, ELEVATOR_HEIGHT;
   const LEFT_OFFSET = 10;
   const TOP_OFFSET = 10;
   const NUM_OF_PEOPLE = 1000;
@@ -757,9 +753,6 @@ window.onload = function() {
     {
       ctx.fillText(elevator_target_floor[i], ELEVATOR_WIDTH * i + 20, elevator_y[i] + 20);
     }
-
-    // debug text
-//    ctx.fillText(elevator + "," + counter + "," + mouseX + "," + mouseY, 10, 10);
 
     // person field in
     if( counter == 0){
