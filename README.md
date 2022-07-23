@@ -6,9 +6,9 @@ Click here to play
 https://elebeater.net/  
 
 BGM
- - BGM soundorbis / Ant Work https://note.mu/soundorbis/n/n4470d1faf50c(Old Link)
- - BGM Masahide Sumiyoshi / Another Chopin Etude OP.10 No.1 https://linkco.re/q327DdRT
- - BGM(Alert) Iwakiri / 02012020
+ - BGM1: soundorbis / Ant Work (https://dova-s.jp/_contents/license/)
+ - BGM2: Masahide Sumiyoshi / Another Chopin Etude OP.10 No.1 (https://linkco.re/q327DdRT)
+ - Alert BGM: Iwakiri / 02012020
 
 ## How to play
 The number attached on the person is the destination floor.  
@@ -40,3 +40,7 @@ The game is over if the value becomes empty.
 ## Score
 You get the points when the people arrive at the destination floor.  
 You can get the additional points when the people arrive continuously before the elevator stops.
+
+## Trademark
+Elebeater is a registered trademark of Masahide Sumiyoshi  
+登録商標「Ｅｌｅｂｅａｔｅｒ」（商標登録第6506550号）
