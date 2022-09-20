@@ -411,12 +411,12 @@ window.onload = function() {
     // Draw Elevators
     for(var i = 0; i < NUM_OF_ELEVATORS; i++){
       if(elevator_ride_on[i] == true) {
-        ctx.strokeStyle = "#ccc";
+        ctx.strokeStyle = "#aaa";
       }else{
         if(touchHoldElevator == i){
           ctx.strokeStyle = "#f00"; // touch hold
         }else{
-          ctx.strokeStyle = "#33f"; // not touch hold
+          ctx.strokeStyle = "#55f"; // not touch hold
         }
       }
       ctx.beginPath();
