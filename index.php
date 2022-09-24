@@ -71,6 +71,7 @@ window.onload = function() {
 
   var person_in_field = new Array(NUM_OF_PEOPLE);
   var person_x =  new Array(NUM_OF_PEOPLE);
+  var person_y =  new Array(NUM_OF_PEOPLE);
   var person_current_floor =  new Array(NUM_OF_PEOPLE);
   var person_target_floor =   new Array(NUM_OF_PEOPLE);
   var person_ride_on = new Array(NUM_OF_PEOPLE);
@@ -457,39 +458,38 @@ window.onload = function() {
     for(var i = 0; i < NUM_OF_PEOPLE; i++){
 
      if(person_in_field[i] == true){
-      var person_y;
       if( person_ride_on[i] == false){
-        person_y = getFloorBottomY(person_current_floor[i]);
+        person_y[i] = getFloorBottomY(person_current_floor[i]);
       }else{
-        person_y = elevator_y[person_ride_on_elevator[i]] + ELEVATOR_HEIGHT;		// ride on, get elevator y
+        person_y[i] = elevator_y[person_ride_on_elevator[i]] + ELEVATOR_HEIGHT;		// ride on, get elevator y
       }
 
       var size = person_size[i];;
       ctx.beginPath();
       ctx.strokeStyle = 'rgb(' + person_angry_gauge[i] + ', 0, 0)';
-      ctx.arc(person_x[i], person_y + person_offset * size, 3 * size, 0, Math.PI*2, true);
-      ctx.moveTo(person_x[i] - 5 * size, person_y + (6 + person_offset) * size);
-      ctx.lineTo(person_x[i] + 5 * size, person_y + (6 + person_offset) * size);
+      ctx.arc(person_x[i], person_y[i] + person_offset * size, 3 * size, 0, Math.PI*2, true);
+      ctx.moveTo(person_x[i] - 5 * size, person_y[i] + (6 + person_offset) * size);
+      ctx.lineTo(person_x[i] + 5 * size, person_y[i] + (6 + person_offset) * size);
 
-      ctx.moveTo(person_x[i], person_y + (3 + person_offset) * size);
-      ctx.lineTo(person_x[i], person_y + (8 + person_offset) * size);
+      ctx.moveTo(person_x[i], person_y[i] + (3 + person_offset) * size);
+      ctx.lineTo(person_x[i], person_y[i] + (8 + person_offset) * size);
 
-      ctx.moveTo(person_x[i],            person_y + (8 + person_offset) * size);
-      ctx.lineTo(person_x[i] - 4 * size, person_y + (11 + person_offset) * size);
+      ctx.moveTo(person_x[i],            person_y[i] + (8 + person_offset) * size);
+      ctx.lineTo(person_x[i] - 4 * size, person_y[i] + (11 + person_offset) * size);
 
-      ctx.moveTo(person_x[i],            person_y + (8 + person_offset) * size);
-      ctx.lineTo(person_x[i] + 4 * size, person_y + (11 + person_offset) * size);
+      ctx.moveTo(person_x[i],            person_y[i] + (8 + person_offset) * size);
+      ctx.lineTo(person_x[i] + 4 * size, person_y[i] + (11 + person_offset) * size);
 
       ctx.stroke();
 
-      ctx.fillText(person_target_floor[i], person_x[i] - 8, person_y - 4 + person_offset);
+      ctx.fillText(person_target_floor[i], person_x[i] - 8, person_y[i] - 4 + person_offset);
 
       // draw angry line
       if(person_angry_gauge[i] > 255){
         var building_value_height = FIELD_HEIGHT * building_value / BUILDING_VALUE_MAX;
         ctx.beginPath();
         ctx.strokeStyle = "#eaa";
-        ctx.moveTo(person_x[i],     person_y + 8 + person_offset);
+        ctx.moveTo(person_x[i],     person_y[i] + 8 + person_offset);
         ctx.lineTo(LEFT_OFFSET + FIELD_WIDTH + 2, TOP_OFFSET + FIELD_HEIGHT - building_value_height);
         ctx.stroke();
       }
