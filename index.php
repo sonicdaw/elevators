@@ -460,11 +460,6 @@ window.onload = function() {
     for(var i = 0; i < NUM_OF_PEOPLE; i++){
 
      if(person_active_in_field[i] == true){
-      if( person_ride_on[i] == false){
-        person_y[i] = getFloorBottomY(person_current_floor[i]);
-      }else{
-        person_y[i] = elevator_y[person_ride_on_elevator[i]] + ELEVATOR_HEIGHT;		// ride on, get elevator y
-      }
 
       var size = person_size[i];;
       ctx.beginPath();
@@ -599,6 +594,13 @@ window.onload = function() {
     // move persons
     for(var i = 0; i < NUM_OF_PEOPLE; i++){
      if(person_active_in_field[i] == true){
+
+      if( person_ride_on[i] == false){
+        person_y[i] = getFloorBottomY(person_current_floor[i]);
+      }else{
+        person_y[i] = elevator_y[person_ride_on_elevator[i]] + ELEVATOR_HEIGHT;		// ride on, get elevator y
+      }
+
       // algorithm
 
       // find near elevator
