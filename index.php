@@ -81,6 +81,7 @@ window.onload = function() {
   var person_angry_gauge = new Array(NUM_OF_PEOPLE);
   var person_offset = -11;
   var person_size = new Array(NUM_OF_PEOPLE);
+  var person_moveout_vx = new Array(NUM_OF_PEOPLE);
 
   const NUM_OF_ARRIVED = 20;
   const ARRIVED_COUNTER_MAX = 200;
@@ -459,11 +460,15 @@ window.onload = function() {
     // Draw Persons
     for(var i = 0; i < NUM_OF_PEOPLE; i++){
 
-     if(person_active_in_field[i] == true){
+     if(person_in_field[i] == true){
 
       var size = person_size[i];;
       ctx.beginPath();
-      ctx.strokeStyle = 'rgb(' + person_angry_gauge[i] + ', 0, 0)';
+      if(person_active_in_field[i] == true){
+        ctx.strokeStyle = 'rgb(' + person_angry_gauge[i] + ', 0, 0)';	// active color
+      }else{
+        ctx.strokeStyle = 'rgb(194,194,194)';	// arrived color
+      }
       ctx.arc(person_x[i], person_y[i] + person_offset * size, 3 * size, 0, Math.PI*2, true);
       ctx.moveTo(person_x[i] - 5 * size, person_y[i] + (6 + person_offset) * size);
       ctx.lineTo(person_x[i] + 5 * size, person_y[i] + (6 + person_offset) * size);
@@ -479,6 +484,11 @@ window.onload = function() {
 
       ctx.stroke();
 
+      if(person_active_in_field[i] == true){
+        ctx.fillStyle = 'rgb(0,0,0)';
+      }else{
+        ctx.fillStyle = 'rgb(194,194,194)';
+      }
       ctx.fillText(person_target_floor[i], person_x[i] - 8, person_y[i] - 4 + person_offset);
 
       // draw angry line
@@ -592,7 +602,8 @@ window.onload = function() {
     }
 
     // move persons
-    for(var i = 0; i < NUM_OF_PEOPLE; i++){
+   for(var i = 0; i < NUM_OF_PEOPLE; i++){
+    if(person_in_field[i] == true){
      if(person_active_in_field[i] == true){
 
       if( person_ride_on[i] == false){
@@ -625,8 +636,14 @@ window.onload = function() {
           if(building_value < 0) {game_over = true; game_over_touchlock = 400;}		// GAME OVER
         }
       }
+     }else{		// arrived (not active) and move to out of floor
+      person_x[i] += person_moveout_vx[i];
+      if( person_x[i] < 0 || person_x[i] > FIELD_WIDTH ) {
+         person_in_field[i] = false;	// out of field
+      }
      }
     }
+   }
 
     // ride on
     for(var i = 0; i < NUM_OF_PEOPLE; i++){
@@ -680,6 +697,9 @@ window.onload = function() {
 
             person_active_in_field[i] = false;	// out of game
             person_ride_on[i] = false;
+            person_moveout_vx[i] = Math.floor(Math.random() * 5) - 2;
+            if(person_moveout_vx[i] == 0) person_moveout_vx[i] = 1;
+            person_moveout_vx[i] = person_moveout_vx[i] * 2;
         }
       }
     }
@@ -764,7 +784,7 @@ window.onload = function() {
     if( counter == 0){
       for(var i = 0; i < NUM_OF_PEOPLE; i++)
       {
-        if( person_active_in_field[i] == false ){
+        if( person_in_field[i] == false ){
           if(Math.random() * 10 > 5){
             person_x[i] = 0;
           }else{
@@ -775,10 +795,12 @@ window.onload = function() {
           }else{
             person_current_floor[i] = Math.floor(Math.random() * NUM_OF_FLOORS + 1);
           }
+          person_y[i] = getFloorBottomY(person_current_floor[i]);
           person_target_floor[i] = Math.floor(Math.random() * NUM_OF_FLOORS + 1);
           while(person_current_floor[i] == person_target_floor[i]){
             person_target_floor[i] = Math.floor(Math.random() * NUM_OF_FLOORS + 1);
           }
+          person_in_field[i] = true;
           person_active_in_field[i] = true;
           person_ride_on[i] = false;
           person_ride_on_elevator[i] = -1;
