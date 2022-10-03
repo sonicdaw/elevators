@@ -10,16 +10,13 @@ if($num_of_elevators == 0) $num_of_elevators = 4;
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 </head>
 <body><CENTER>
-<table style="border:none;"><tbody style="border:none;"><tr style="border:none;">
-<td style="border:none;"><button id="play">Audio ON</button>
+<button id="play">Audio ON</button>
 <a href="./index.php">4x4</a> 
 <a href="./index.php?floor=8&elevator=4">4x8</a> 
 <a href="./index.php?floor=16&elevator=10">10x16</a> 
 <a href="https://github.com/sonicdaw/elevators/blob/master/index.php" target="_blank">Code</a><br>
 Readme(<a href="https://elebeater.net/Elebeater.pdf" target="_blank">JP</a>/<a href="https://github.com/sonicdaw/elevators" target="_blank">EN</a>)
-<a href="https://forms.gle/4Ssz2SVV8GXCitFw7" target="_blank">Contact</a> Elebeater.net→
-</td><td style="border:none;"><img src="./img/QR_Elebeater_net.png" height="60"></td>
-</tr></tbody></table>
+<a href="https://forms.gle/4Ssz2SVV8GXCitFw7" target="_blank">Contact</a><br>
 <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
 <canvas id="cvs" />
 <script type="text/javascript">
