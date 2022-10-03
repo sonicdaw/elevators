@@ -14,9 +14,9 @@ if($num_of_elevators == 0) $num_of_elevators = 4;
 <a href="./index.php">4x4</a> 
 <a href="./index.php?floor=8&elevator=4">4x8</a> 
 <a href="./index.php?floor=16&elevator=10">10x16</a> 
-<a href="https://github.com/sonicdaw/elevators/blob/master/index.php" target="_blank">Code</a><br>
-Readme(<a href="https://elebeater.net/Elebeater.pdf" target="_blank">JP</a>/<a href="https://github.com/sonicdaw/elevators" target="_blank">EN</a>)
-<a href="https://forms.gle/4Ssz2SVV8GXCitFw7" target="_blank">Contact</a><br>
+<a href="https://github.com/sonicdaw/elevators/blob/master/index.php" target="_blank">Code</a>
+Readme(<a href="https://elebeater.net/Elebeater.pdf" target="_blank">JP</a>/<a href="https://github.com/sonicdaw/elevators" target="_blank">EN</a>)<br>
+<a href="https://forms.gle/4Ssz2SVV8GXCitFw7" target="_blank">Contact</a> <font size=2><a href="https://youtu.be/1awaW6KAUwE?t=5893" target="_blank">YouTube IndieGameTokyo2022</a> <a href="https://news.yahoo.co.jp/articles/714f449f7909535baad0b974daa23c1c6826097e" target="_blank">Yahoo!News</a></font><br><br>
 <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
 <canvas id="cvs" />
 <script type="text/javascript">
