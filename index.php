@@ -93,6 +93,7 @@ window.onload = function() {
   var touchViewCounter = 0;
   var touchHoldElevator = -1;
   var timer;
+  var mouse_click = false;
 
   var interval = 10;
 
@@ -135,14 +136,27 @@ window.onload = function() {
   // mouse or touch
 
   // mouse
+  canvas.onmousedown=function(e){
+    adjustLocation(e);
+    touchHoldElevator = find_elevator_and_floor();
+    mouse_click = true;
+    return false;
+  }
+
   canvas.onmousemove=function(e){
-    adjustLocationWithoutTouchVisualizer(e);
+    if(mouse_click == true){
+       adjustLocation(e);
+    }else{
+       adjustLocationWithoutTouchVisualizer(e);
+    }
     return false;
   }
 
   canvas.onmouseup=function(e){
     adjustLocation(e);
     find_elevator_and_floor();
+    touchHoldElevator = -1;
+    mouse_click = false;
     return false;
   }
 
