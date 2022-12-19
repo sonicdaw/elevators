@@ -1,6 +1,7 @@
 <?php
 $num_of_floors = intval($_GET["floor"]);
 $num_of_elevators = intval($_GET["elevator"]);
+$screen = $_GET["screen"];
 if($num_of_floors == 0) $num_of_floors = 4;
 if($num_of_elevators == 0) $num_of_elevators = 4;
 ?><html>
@@ -10,13 +11,21 @@ if($num_of_elevators == 0) $num_of_elevators = 4;
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 </head>
 <body><CENTER>
-<button id="play">Audio ON</button>
-<a href="./index.php">4x4</a> 
-<a href="./index.php?floor=8&elevator=4">4x8</a> 
-<a href="./index.php?floor=16&elevator=10">10x16</a> 
-<a href="https://github.com/sonicdaw/elevators/blob/master/index.php" target="_blank">Code</a>
-Readme(<a href="https://elebeater.net/Elebeater.pdf" target="_blank">JP</a>/<a href="https://github.com/sonicdaw/elevators" target="_blank">EN</a>)<br>
-<a href="https://forms.gle/4Ssz2SVV8GXCitFw7" target="_blank">Contact</a> <font size=2><a href="https://youtu.be/1awaW6KAUwE?t=5893" target="_blank">YouTube IndieGameTokyo2022</a> <a href="https://news.yahoo.co.jp/articles/714f449f7909535baad0b974daa23c1c6826097e" target="_blank">Yahoo!News</a></font><br><br>
+<?php
+if ( strcmp($screen, "fit_height") != 0){
+print'<button id="play">Audio ON</button> ';
+print'<a href="./index.php">4x4</a> ';
+print'<a href="./index.php?floor=8&elevator=4">4x8</a> ';
+print'<a href="./index.php?floor=16&elevator=10">10x16</a> ';
+print'<a href="https://github.com/sonicdaw/elevators/blob/master/index.php" target="_blank">Code</a> ';
+print'Readme(<a href="https://elebeater.net/Elebeater.pdf" target="_blank">JP</a>/<a href="https://github.com/sonicdaw/elevators" target="_blank">EN</a>)<br>';
+print'<a href="https://forms.gle/4Ssz2SVV8GXCitFw7" target="_blank">Contact</a> <font size=2><a href="https://youtu.be/1awaW6KAUwE?t=5893" target="_blank">IndieGameTokyo2022</a> <a href="https://news.yahoo.co.jp/articles/714f449f7909535baad0b974daa23c1c6826097e" target="_blank">Yahoo!News</a></font> ';
+print'<a href="./index.php?screen=fit_height">FitScreen</a><br><br> ';
+}else{
+print'<button id="play">Audio ON</button><br>';
+}
+?>
+
 <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
 <canvas id="cvs" />
 <script type="text/javascript">
@@ -120,7 +129,7 @@ window.onload = function() {
     var w = document.documentElement.clientWidth;
     var h = document.documentElement.clientHeight - 40;
     if(w > 300) w = 300;
-    if(h > 600) h = 600;
+<?php if( strcmp($screen, "fit_height") != 0){ print "    if(h > 600) h = 600;"; } ?>
     canvas.width = w;
     canvas.height = h;
 
