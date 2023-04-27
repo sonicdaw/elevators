@@ -543,6 +543,15 @@ window.onload = function() {
              BUILDING_VALUE_WIDTH - 4, building_value_height);
     ctx.stroke();
 
+
+    // KAMEIDO CLOCK 1st Anniversary
+    ctx.beginPath();
+    ctx.strokeStyle = "#eaa";
+    ctx.font = "11pt 'Times New Roman'";
+    ctx.fillText("KAMEIDO CLOCK 1st Anniversary", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8));
+    ctx.stroke();
+
+
     // Draw Time
     ctx.fillStyle = 'rgba(0, 0, 0)';
     var time_size = 1;  // 0-1
