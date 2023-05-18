@@ -544,11 +544,11 @@ window.onload = function() {
     ctx.stroke();
 
 
-    // KAMEIDO CLOCK 1st Anniversary
+    // INDIE Live Expo 2023
     ctx.beginPath();
     ctx.strokeStyle = "#eaa";
     ctx.font = "11pt 'Times New Roman'";
-    ctx.fillText("KAMEIDO CLOCK 1st Anniversary", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8));
+    ctx.fillText("INDIE Live Expo 2023", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8));
     ctx.stroke();
 
 
