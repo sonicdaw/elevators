@@ -544,12 +544,12 @@ window.onload = function() {
     ctx.stroke();
 
 
-    // INDIE Live Expo 2023
+    // Free Text Area
     ctx.beginPath();
     ctx.strokeStyle = "#eaa";
     ctx.font = "11pt 'Times New Roman'";
-    ctx.fillText("INDIE Live Expo 2023", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8));
-    ctx.fillText("Summer Spotlight", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8 * 1.5));
+    ctx.fillText("", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8));
+    ctx.fillText("", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8 * 1.5));
     ctx.stroke();
 
 
