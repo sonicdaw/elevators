@@ -836,7 +836,11 @@ window.onload = function() {
           person_ride_on_elevator[i] = -1;
           person_near_elevator_num[i] = Math.floor(Math.random() * NUM_OF_ELEVATORS);
           person_angry_gauge[i] = 0;
-          person_size[i] = Math.floor(Math.random() * 9 + 1);
+          if(NUM_OF_FLOORS<9){
+            person_size[i] = Math.floor(Math.random() * 9 + 1);
+          }else{
+            person_size[i] = Math.floor(Math.random() * 4 + 1);
+          }
           break;
         }
       }
