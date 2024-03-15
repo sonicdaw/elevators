@@ -122,6 +122,51 @@ window.onload = function() {
   var sound_loaded = false;
   var playing_bgm = 0;
 
+  const getFloorBottomY = floor => Math.floor(ELEVATOR_HEIGHT * (NUM_OF_FLOORS - floor + 1) + TOP_OFFSET);
+  const getFloorY = floor => Math.floor(ELEVATOR_HEIGHT * (NUM_OF_FLOORS - floor) + TOP_OFFSET);
+  const getFloor = y => Math.min(Math.max(Math.floor(NUM_OF_FLOORS - (y - TOP_OFFSET) / ELEVATOR_HEIGHT + 1), 1), NUM_OF_FLOORS);
+  const getElevatorCenterX = e => Math.floor(e * ELEVATOR_WIDTH + ELEVATOR_WIDTH / 2 + LEFT_OFFSET);
+  const getElevator = x => Math.min(Math.max(Math.floor((x - LEFT_OFFSET) / ELEVATOR_WIDTH), 0), NUM_OF_ELEVATORS - 1);
+  const getElevatorOnPerson = (x, personWidth) => {
+    for(let i = 0; i < NUM_OF_ELEVATORS; i++){
+      if(x > ELEVATOR_WIDTH * i + LEFT_OFFSET                  + Math.abs(personWidth) &&
+         x < ELEVATOR_WIDTH * i + LEFT_OFFSET + ELEVATOR_WIDTH - Math.abs(personWidth)) {
+        return i;
+      }
+      if(x === Math.floor(ELEVATOR_WIDTH * i + LEFT_OFFSET + ELEVATOR_WIDTH / 2)){
+        return i;
+      }
+    }
+    return -1;
+  };
+
+  // Count Max for next person in. (Small = Busy)
+  const countMaxForNextPersonIn = () => {
+    let count = 80;
+    switch (time_hour) {
+      case 6:  count = 600; break;
+      case 7:  count = 200; break;
+      case 8:  count = 40;  break;
+      case 9:  count = 60;  break;
+      case 12: count = 20;  break;
+      case 17: count = 40;  break;
+      case 18: count = 30;  break;
+      case 19: count = 60;  break;
+      case 20: count = 70;  break;
+    }
+    return count;
+  };
+
+  const person_fieldin_1stfloor_percentage = () => {
+    let percentage = 80;
+    switch (time_hour) {
+      case 6: case 7: percentage = 90; break;
+      case 8: percentage = 60; break;
+      case 9: percentage = 50; break;
+    }
+    return percentage;
+  };
+
   init_game();
 
 //  var elevator;
@@ -299,104 +344,6 @@ window.onload = function() {
     mouseY = e.clientY - rect.top;
   }
 
-  function getFloorBottomY(floor) {
-    return Math.floor(ELEVATOR_HEIGHT * (NUM_OF_FLOORS - floor + 1) + TOP_OFFSET);
-  }
-
-  function getFloorY(floor) {
-    return Math.floor(ELEVATOR_HEIGHT * (NUM_OF_FLOORS - floor) + TOP_OFFSET);
-  }
-
-  function getFloor(Y) {
-    var floor_num = NUM_OF_FLOORS - (Y - TOP_OFFSET) / ELEVATOR_HEIGHT + 1;
-
-    if (floor_num < 1) floor_num = 1;
-    if (floor_num > NUM_OF_FLOORS) floor_num = NUM_OF_FLOORS;
-
-    return Math.floor(floor_num);
-  }
-
-
-  function getElevatorCenterX(e) {
-    return Math.floor(e * ELEVATOR_WIDTH + ELEVATOR_WIDTH / 2 + LEFT_OFFSET);
-  }
-
-  function getElevator(X) {
-    var elevator_num = (X - LEFT_OFFSET) / ELEVATOR_WIDTH;
-
-    if (elevator_num < 0) elevator_num = 0;
-    if (elevator_num > NUM_OF_ELEVATORS - 1) elevator_num = NUM_OF_ELEVATORS - 1;
-
-    return Math.floor(elevator_num);
-  }
-
-  function getElevatorOnPerson(X, person_width) {
-    for(var i = 0; i < NUM_OF_ELEVATORS; i++){
-      if(X > ELEVATOR_WIDTH * i       + LEFT_OFFSET                  + Math.abs(person_width) &&
-         X < ELEVATOR_WIDTH * i       + LEFT_OFFSET + ELEVATOR_WIDTH - Math.abs(person_width)){
-         return i;
-      }
-      if(X == Math.floor(ELEVATOR_WIDTH * i       + LEFT_OFFSET + ELEVATOR_WIDTH / 2)){  // center check for large size
-         return i;
-      }
-    }
-    return -1;
-  }
-
-  // Count Max for next person in. (Small = Busy)
-  function countMaxForNextPersonIn(){
-    var count = 80;
-    switch (time_hour) {
-      case 6:
-        count = 600;
-        break;
-      case 7:
-        count = 200;
-        break;
-      case 8:
-        count = 40;
-        break;
-      case 9:
-        count = 60;
-        break;
-      case 12:
-        count = 20;
-        break;
-      case 17:
-        count = 40;
-        break;
-      case 18:
-        count = 30;
-        break;
-      case 19:
-        count = 60;
-        break;
-      case 20:
-        count = 70;
-        break;
-    }
-    return count;
-  }
-
-  function person_fieldin_1stfloor_percentage(){
-    var percentage = 80;
-    switch (time_hour) {
-      case 6:
-        percentage = 90;
-        break;
-      case 7:
-        percentage = 90;
-        break;
-      case 8:
-        percentage = 60;
-        break;
-      case 9:
-        percentage = 50;
-        break;
-    }
-    return percentage;
-  }
-
   // DRAW
   function draw(){
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
@@ -567,18 +514,10 @@ window.onload = function() {
     }else{
        time_size = 0;
     }
-    ctx.font = 10 + 10 * time_size + "pt 'Times New Roman'";
-    var text_minutes;
-    if(time_minute < 10){
-      text_minutes = "0" + time_minute;
-    }else{
-      text_minutes = time_minute;
-    }
-    if(time_hour < 12){
-      ctx.fillText("AM " + time_hour + ":" + text_minutes, LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 4) * time_size);
-    }else{
-      ctx.fillText("PM " + (time_hour - 12)  + ":" + text_minutes, LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 4) * time_size);
-    }
+    ctx.font = `${10 + 10 * time_size}pt 'Times New Roman'`;
+    const text_minutes = (time_minute < 10) ? `0${time_minute}` : time_minute;
+    const time_text = (time_hour < 12) ? `AM ${time_hour}:${text_minutes}` : `PM ${time_hour - 12}:${text_minutes}`;
+    ctx.fillText(time_text, LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 4) * time_size);
     ctx.font = DEFAULT_FONT;
 
     // Draw Score
@@ -805,8 +744,7 @@ window.onload = function() {
     ctx.fillStyle = "#000";
 
     // Draw target floor
-    for(var i = 0; i < NUM_OF_ELEVATORS; i++)
-    {
+    for(var i = 0; i < NUM_OF_ELEVATORS; i++){
       ctx.fillText(elevator_target_floor[i], ELEVATOR_WIDTH * i + 20, elevator_y[i] + 20);
     }
 
@@ -836,11 +774,7 @@ window.onload = function() {
           person_ride_on_elevator[i] = -1;
           person_near_elevator_num[i] = Math.floor(Math.random() * NUM_OF_ELEVATORS);
           person_angry_gauge[i] = 0;
-          if(NUM_OF_FLOORS<9){
-            person_size[i] = Math.floor(Math.random() * 9 + 1);
-          }else{
-            person_size[i] = Math.floor(Math.random() * 4 + 1);
-          }
+          person_size[i] = NUM_OF_FLOORS < 9 ? Math.floor(Math.random() * 9 + 1) : Math.floor(Math.random() * 4 + 1);
           break;
         }
       }
@@ -880,15 +814,15 @@ window.onload = function() {
   });
 
   function bgm_pause(){
-    if(bgm_1!=null) { bgm_1.pause(); }
-    if(bgm_2!=null) { bgm_2.pause(); }
-    if(bgm_alert!=null) {bgm_alert.pause(); }
+    if(bgm_1) { bgm_1.pause(); }
+    if(bgm_2) { bgm_2.pause(); }
+    if(bgm_alert) {bgm_alert.pause(); }
   }
 
   function bgm_stop(){
-    if(bgm_1!=null) { bgm_1.pause(); bgm_1.currentTime = 0;}
-    if(bgm_2!=null) { bgm_2.pause(); bgm_2.currentTime = 0;}
-    if(bgm_alert!=null) {bgm_alert.pause(); bgm_alert.currentTime = 0;}
+    if(bgm_1) { bgm_1.pause(); bgm_1.currentTime = 0;}
+    if(bgm_2) { bgm_2.pause(); bgm_2.currentTime = 0;}
+    if(bgm_alert) {bgm_alert.pause(); bgm_alert.currentTime = 0;}
   }
 
   function load_se(){
