@@ -329,6 +329,16 @@ window.onload = function() {
     touchVisualizerY = mouseY;
     touchVisualizerCounter = 30;
 
+    // Open window for X Post
+    if(game_over == true && mouseY >= HEIGHT * 4 / 5 - 20){
+      touchHoldElevator = -1; // mouse up
+      mouse_click = false;
+      var tweet_url = generateTwitterUrl(score);
+      window.open(tweet_url, '_blank');
+
+      return;
+    }
+
     if(game_over == true && game_over_touchlock == 0){
       init_game();
       game_over = false;
@@ -533,9 +543,19 @@ window.onload = function() {
         ctx.font = 40 + "pt 'Times New Roman'";
         ctx.fillText("Game Over", WIDTH / 2, HEIGHT / 2);
 
+        // Draw Link to X Post
+        ctx.fillStyle = "#000000";
+        ctx.font = 20 + "pt 'Times New Roman'";
+        ctx.fillText("Post score to X(Twitter)", WIDTH / 2, HEIGHT * 4 / 5);
+        ctx.beginPath();
+        ctx.strokeStyle = "#000000";
+        ctx.moveTo(WIDTH * 1 / 10,     HEIGHT * 4 / 5 + 10);
+        ctx.lineTo(WIDTH * 9 / 10,     HEIGHT * 4 / 5 + 10);
+        ctx.stroke();
+
         if(game_over_touchlock == 0){
           ctx.font = 30 + "pt 'Times New Roman'";
-          ctx.fillText("Tap to replay", WIDTH / 2, HEIGHT * 2 / 3);
+          ctx.fillText("Tap to replay", WIDTH / 2, HEIGHT * 1 / 3);
         }
         score_on_screen = score;
        return;
@@ -835,6 +855,13 @@ window.onload = function() {
       se_elevator_arrived_low.load();
       sound_loaded = true;
     }
+  }
+
+  // Generate URL For X Post
+  function generateTwitterUrl(score) {
+    var text = "Elebeater Score: " + score + "\n\n" + "#Elebeater" + "\n" + "https://elebeater.net";
+    var tweet_url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
+    return tweet_url;
   }
 
   move();
