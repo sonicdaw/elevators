@@ -860,7 +860,16 @@ window.onload = function() {
 
   // Generate URL For X Post
   function generateTwitterUrl(score) {
-    var text = "Elebeater Score: " + score + "\n\n" + "#Elebeater" + "\n" + "https://elebeater.net";
+    var playtime;
+    const text_minutes = (time_minute < 10) ? `0${time_minute}` : time_minute;
+    const time_text = (time_hour < 12) ? `AM ${time_hour}:${text_minutes}` : `PM ${time_hour - 12}:${text_minutes}`;
+    if(time_day == 0 || time_day == 1){
+      playtime = time_day + " day " + time_text;
+    }else{
+      playtime = time_day + " days " + time_text;
+    }
+    var building = "<?php echo $num_of_elevators ?> elevators <?php echo $num_of_floors ?> floors building";
+    var text = "Elebeater\n\nScore: " + score + " (" + playtime + ")\n" + building + "\n\n" + "#Elebeater" + "\n" + "https://elebeater.net";
     var tweet_url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
     return tweet_url;
   }
