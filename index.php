@@ -330,7 +330,7 @@ window.onload = function() {
     touchVisualizerCounter = 30;
 
     // Open window for X Post
-    if(game_over == true && mouseY >= HEIGHT * 4 / 5 - 20){
+    if(game_over == true && mouseY >= HEIGHT * 4 / 5 - 30 && mouseY <= HEIGHT * 4 / 5 + 50){
       touchHoldElevator = -1; // mouse up
       mouse_click = false;
       var tweet_url = generateTwitterUrl(score);
@@ -378,7 +378,7 @@ window.onload = function() {
     }
 
     // Draw touch
-    if(touchViewCounter > 0){
+    if(touchViewCounter > 0 && game_over == false){
       var gb_color = 255 - touchViewCounter;
       ctx.fillStyle = 'rgb(255, ' + gb_color + ', ' + gb_color + ')';
       ctx.beginPath();
@@ -544,17 +544,29 @@ window.onload = function() {
         ctx.font = 40 + "pt 'Times New Roman'";
         ctx.fillText("Game Over", WIDTH / 2, HEIGHT / 2);
 
-        // Draw Link to X Post
+        // Draw button to X Post
         ctx.fillStyle = "#000000";
-        ctx.font = 20 + "pt 'Times New Roman'";
-        ctx.fillText("Post score to X(Twitter)", WIDTH / 2, HEIGHT * 4 / 5);
-        ctx.beginPath();
-        ctx.strokeStyle = "#000000";
-        ctx.moveTo(WIDTH * 1 / 10,     HEIGHT * 4 / 5 + 10);
-        ctx.lineTo(WIDTH * 9 / 10,     HEIGHT * 4 / 5 + 10);
+        ctx.roundRect(WIDTH * 1 / 20, HEIGHT * 4 / 5 - 20, WIDTH * 18 / 20, 60, 30);
+        ctx.fill();
+
+        ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+        ctx.shadowBlur = 5;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 5;
+        ctx.fillStyle = "#000000";
+        ctx.fill();
+
+        ctx.strokeStyle = "#FFFFFF";
+        ctx.lineWidth = 3;
+        ctx.shadowColor = "transparent";
         ctx.stroke();
 
+        ctx.fillStyle = "#FFFFFF";
+        ctx.font = "bold 20pt 'Arial'";
+        ctx.fillText("Post score to X", WIDTH / 2, HEIGHT * 4 / 5 + 20);
+
         if(game_over_touchlock == 0){
+          ctx.fillStyle = "#E9967A";
           ctx.font = 30 + "pt 'Times New Roman'";
           ctx.fillText("Tap to replay", WIDTH / 2, HEIGHT * 1 / 3);
         }
