@@ -88,6 +88,8 @@ window.onload = function() {
   var person_offset = -11;
   var person_size = new Array(NUM_OF_PEOPLE);
   var person_moveout_vx = new Array(NUM_OF_PEOPLE);
+  var person_move_counter = new Array(NUM_OF_PEOPLE);
+  const PERSON_MOVE_COUNTER_MAX = 40;
 
   const NUM_OF_ARRIVED = 20;
   const ARRIVED_COUNTER_MAX = 200;
@@ -288,6 +290,7 @@ window.onload = function() {
       person_near_elevator_num[i] = 0;
       person_angry_gauge[i] = 0;
       person_size[i] = 1;
+      person_move_counter[i] = 0;
     }
 
     for(var i = 0; i < NUM_OF_ARRIVED; i++)
@@ -454,10 +457,10 @@ window.onload = function() {
       ctx.lineTo(person_x[i], person_y[i] + (8 + person_offset) * size);
 
       ctx.moveTo(person_x[i],            person_y[i] + (8 + person_offset) * size);
-      ctx.lineTo(person_x[i] - 4 * size, person_y[i] + (11 + person_offset) * size);
+      ctx.lineTo(person_x[i] - 4 * size * (PERSON_MOVE_COUNTER_MAX - person_move_counter[i]) / PERSON_MOVE_COUNTER_MAX, person_y[i] + (11 + person_offset) * size);
 
       ctx.moveTo(person_x[i],            person_y[i] + (8 + person_offset) * size);
-      ctx.lineTo(person_x[i] + 4 * size, person_y[i] + (11 + person_offset) * size);
+      ctx.lineTo(person_x[i] + 4 * size * (PERSON_MOVE_COUNTER_MAX - person_move_counter[i]) / PERSON_MOVE_COUNTER_MAX, person_y[i] + (11 + person_offset) * size);
 
       ctx.stroke();
 
@@ -629,14 +632,23 @@ window.onload = function() {
       }
 
       if( person_ride_on[i] == false){
-        if( person_x[i] > getElevatorCenterX(person_near_elevator_num[i]) ) person_x[i]-=0.5;
-        if( person_x[i] < getElevatorCenterX(person_near_elevator_num[i]) ) person_x[i]+=0.5;
+        if( person_x[i] > getElevatorCenterX(person_near_elevator_num[i]) ) {
+          person_x[i]-=0.5;
+          person_move_counter[i] = (person_move_counter[i] + 1) % PERSON_MOVE_COUNTER_MAX;
+        }else if( person_x[i] < getElevatorCenterX(person_near_elevator_num[i]) ) {
+          person_x[i]+=0.5;
+          person_move_counter[i] = (person_move_counter[i] + 1) % PERSON_MOVE_COUNTER_MAX;
+        }else{
+          person_move_counter[i] = 0;
+        }
 
         person_angry_gauge[i]++;	// add angry guage
         if(person_angry_gauge[i] > 255){
           building_value--;
           if(building_value < 0) {game_over = true; game_over_touchlock = 400;}		// GAME OVER
         }
+      }else{
+        person_move_counter[i] = 0;
       }
      }else{		// arrived (not active) and move to out of floor
       person_x[i] += person_moveout_vx[i];
