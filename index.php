@@ -508,9 +508,9 @@ window.onload = function() {
     ctx.beginPath();
     ctx.strokeStyle = "#eaa";
     ctx.font = "18pt 'Times New Roman'";
-    ctx.fillText("Tokyo Game Dungeon 5", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8));
+    ctx.fillText("", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8));
     ctx.font = "11pt 'Times New Roman'";
-    ctx.fillText("2024年5月4日(土) @浜松町", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8 * 1.5));
+    ctx.fillText("", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8 * 1.5));
     ctx.stroke();
 
 
