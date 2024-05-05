@@ -11,20 +11,15 @@ if($num_of_elevators == 0) $num_of_elevators = 4;
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 </head>
 <body><CENTER>
-<?php
-if ( strcmp($screen, "fit_height") != 0){
-print'<button id="play">Audio ON</button> ';
-print'<a href="./index.php">4x4</a> ';
-print'<a href="./index.php?floor=8&elevator=4">4x8</a> ';
-print'<a href="./index.php?floor=16&elevator=10">10x16</a> ';
-print'<a href="https://github.com/sonicdaw/elevators/blob/master/index.php" target="_blank">Code</a><br>';
-print'Readme(<a href="https://elebeater.net/Elebeater.pdf" target="_blank">JP</a>/<a href="https://github.com/sonicdaw/elevators" target="_blank">EN</a>) ';
-print'<a href="https://entaflip.com/" target="_blank">Developer</a> ';
-print'<a href="./index.php?screen=fit_height">FitScreen</a><br><br> ';
-}else{
-print'<button id="play">Audio ON</button><br>';
-}
-?>
+<button id="play">Audio ON</button>
+<a href="./index.php">4x4</a>
+<a href="./index.php?floor=8&elevator=4">4x8</a>
+<a href="./index.php?floor=16&elevator=10">10x16</a>
+<a href="https://github.com/sonicdaw/elevators/blob/master/index.php" target="_blank">Code</a><br>
+Readme(<a href="https://elebeater.net/Elebeater.pdf" target="_blank">JP</a>/<a href="https://github.com/sonicdaw/elevators" target="_blank">EN</a>)
+<a href="https://entaflip.com/" target="_blank">Developer</a>
+<?php if( strcmp($screen, "PCmode") != 0){ print '<a href="./index.php?screen=PCmode">PC Play</a>';} else {print '<a href="./">FitScreen</a>'; } ?>
+<br><br>
 
 <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
 <canvas id="cvs" />
@@ -174,9 +169,9 @@ window.onload = function() {
 //  var elevator;
   function fitCanvasSize() {
     var w = document.documentElement.clientWidth;
-    var h = document.documentElement.clientHeight - 40;
+    var h = document.documentElement.clientHeight - 120;
     if(w > 300) w = 300;
-<?php if( strcmp($screen, "fit_height") != 0){ print "    if(h > 600) h = 600;"; } ?>
+<?php if( strcmp($screen, "PCmode") == 0){ print "    if(h > 600) h = 600;"; } ?>
     canvas.width = w;
     canvas.height = h;
 
