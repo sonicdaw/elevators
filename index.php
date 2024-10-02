@@ -503,9 +503,9 @@ window.onload = function() {
     ctx.beginPath();
     ctx.strokeStyle = "#eaa";
     ctx.font = "18pt 'Times New Roman'";
-    ctx.fillText("Be Elevator", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8));
+    ctx.fillText("Smile Job Adventure", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8));
     ctx.font = "17pt 'Times New Roman'";
-    ctx.fillText("Control the elevator chaos", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8 * 1.5));
+    ctx.fillText("Isle Shinagawa", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8 * 1.5));
     ctx.stroke();
 
 
