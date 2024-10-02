@@ -12,13 +12,6 @@ if($num_of_elevators == 0) $num_of_elevators = 4;
 </head>
 <body><CENTER>
 <button id="play">Audio ON</button>
-<a href="./index.php">4x4</a>
-<a href="./index.php?floor=8&elevator=4">4x8</a>
-<a href="./index.php?floor=16&elevator=10">10x16</a>
-<a href="https://github.com/sonicdaw/elevators/blob/master/index.php" target="_blank">Code</a><br>
-Readme(<a href="https://elebeater.net/Elebeater.pdf" target="_blank">JP</a>/<a href="https://github.com/sonicdaw/elevators" target="_blank">EN</a>)
-<a href="https://entaflip.com/" target="_blank">Developer</a>
-<?php if( strcmp($screen, "PCmode") != 0){ print '<a href="./index.php?screen=PCmode">PC Play</a>';} else {print '<a href="./">FitScreen</a>'; } ?>
 <br><br>
 
 <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
@@ -171,7 +164,7 @@ window.onload = function() {
     var w = document.documentElement.clientWidth;
     var h = document.documentElement.clientHeight - 120;
     if(w > 300) w = 300;
-<?php if( strcmp($screen, "PCmode") == 0){ print "    if(h > 600) h = 600;"; } ?>
+    if(h > 600) h = 600;  // PC Mode
     canvas.width = w;
     canvas.height = h;
 
@@ -328,14 +321,14 @@ window.onload = function() {
     touchVisualizerCounter = 30;
 
     // Open window for X Post
-    if(game_over == true && mouseY >= HEIGHT * 4 / 5 - 30 && mouseY <= HEIGHT * 4 / 5 + 50){
+/*    if(game_over == true && mouseY >= HEIGHT * 4 / 5 - 30 && mouseY <= HEIGHT * 4 / 5 + 50){
       touchHoldElevator = -1; // mouse up
       mouse_click = false;
       var tweet_url = generateTwitterUrl(score);
       window.open(tweet_url, '_blank');
 
       return;
-    }
+    }*/
 
     if(game_over == true && game_over_touchlock == 0){
       init_game();
@@ -500,14 +493,14 @@ window.onload = function() {
 
 
     // Free Text Area
-    ctx.beginPath();
+/*    ctx.beginPath();
     ctx.strokeStyle = "#eaa";
     ctx.font = "18pt 'Times New Roman'";
     ctx.fillText("Be Elevator", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8));
     ctx.font = "17pt 'Times New Roman'";
     ctx.fillText("Control the elevator chaos", LEFT_OFFSET + FIELD_WIDTH / 2, TOP_OFFSET + (TOP_OFFSET + FIELD_HEIGHT / 8 * 1.5));
     ctx.stroke();
-
+*/
 
     // Draw Time
     ctx.fillStyle = 'rgba(0, 0, 0)';
@@ -543,7 +536,7 @@ window.onload = function() {
         ctx.fillText("Game Over", WIDTH / 2, HEIGHT / 2);
 
         // Draw button to X Post
-        ctx.fillStyle = "#000000";
+/*        ctx.fillStyle = "#000000";
         ctx.roundRect(WIDTH * 1 / 20, HEIGHT * 4 / 5 - 20, WIDTH * 18 / 20, 60, 30);
         ctx.fill();
 
@@ -562,7 +555,7 @@ window.onload = function() {
         ctx.fillStyle = "#FFFFFF";
         ctx.font = "bold 20pt 'Arial'";
         ctx.fillText("Post score to X", WIDTH / 2, HEIGHT * 4 / 5 + 20);
-
+*/
         if(game_over_touchlock == 0){
           ctx.fillStyle = "#E9967A";
           ctx.font = 30 + "pt 'Times New Roman'";
