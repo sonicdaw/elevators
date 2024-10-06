@@ -567,7 +567,9 @@ window.onload = function() {
           ctx.fillStyle = "#E9967A";
           ctx.font = 30 + "pt 'Times New Roman'";
           ctx.fillText("Tap to replay", WIDTH / 2, HEIGHT * 1 / 3);
-          bgm_alert.loop = false;
+          if(bgm_alert!=null){
+            bgm_alert.loop = false;
+          }
         }
         score_on_screen = score;
        return;
