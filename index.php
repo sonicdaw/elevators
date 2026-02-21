@@ -168,15 +168,30 @@ window.onload = function() {
 
 //  var elevator;
   function fitCanvasSize() {
-    var w = document.documentElement.clientWidth;
-    var h = document.documentElement.clientHeight - 120;
-    if(w > 300) w = 300;
-<?php if( strcmp($screen, "PCmode") == 0){ print "    if(h > 600) h = 600;"; } ?>
+    var screenW = document.documentElement.clientWidth;
+    var screenH = document.documentElement.clientHeight;
+<?php if( strcmp($screen, "PCmode") == 0){ ?>
+    var w = Math.min(screenW, 300);
+    var h = Math.min(screenH - 120, 600);
+    canvas.style.transform = '';
+    canvas.style.marginBottom = '';
     canvas.width = w;
     canvas.height = h;
-
     WIDTH = w;
     HEIGHT = h;
+<?php } else { ?>
+    var baseW = 300;
+    var baseH = 540;
+    var availH = screenH - 120;
+    var scale = Math.min(availH / baseH, screenW / baseW);
+    canvas.width = baseW;
+    canvas.height = baseH;
+    canvas.style.transformOrigin = 'top center';
+    canvas.style.transform = 'scale(' + scale + ')';
+    canvas.style.marginBottom = Math.round(baseH * (scale - 1)) + 'px';
+    WIDTH = baseW;
+    HEIGHT = baseH;
+<?php } ?>
     FIELD_WIDTH = WIDTH - BUILDING_VALUE_WIDTH - 20;
     FIELD_HEIGHT = HEIGHT - TOP_OFFSET * 2;
     ELEVATOR_WIDTH = FIELD_WIDTH / NUM_OF_ELEVATORS;
@@ -320,8 +335,10 @@ window.onload = function() {
   function adjustLocation(e){
     // adjust
     var rect = e.target.getBoundingClientRect();
-    mouseX = e.clientX - rect.left;
-    mouseY = e.clientY - rect.top;
+    var scaleX = rect.width / canvas.width;
+    var scaleY = rect.height / canvas.height;
+    mouseX = (e.clientX - rect.left) / scaleX;
+    mouseY = (e.clientY - rect.top) / scaleY;
 
     touchVisualizerX = mouseX;
     touchVisualizerY = mouseY;
@@ -348,8 +365,10 @@ window.onload = function() {
   function adjustLocationWithoutTouchVisualizer(e){
     // adjust
     var rect = e.target.getBoundingClientRect();
-    mouseX = e.clientX - rect.left;
-    mouseY = e.clientY - rect.top;
+    var scaleX = rect.width / canvas.width;
+    var scaleY = rect.height / canvas.height;
+    mouseX = (e.clientX - rect.left) / scaleX;
+    mouseY = (e.clientY - rect.top) / scaleY;
   }
 
   // DRAW
